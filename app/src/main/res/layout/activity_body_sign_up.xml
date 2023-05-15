@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signup.BodySignUp"
+    android:background="@color/mainBackground"
+    >
+
+    <TextView
+        android:id="@+id/lbl_body_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:fontFamily="@font/acme"
+        android:textSize="40sp"
+
+        android:text="Informações Corporais"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/height"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/lbl_body_title"
+        android:layout_marginTop="50dp"
+        android:hint="Altura"
+
+        app:boxStrokeColor="@color/mainSecond"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+
+            android:id="@+id/heigh_field"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:inputType="number"
+            android:textSize="30dp"
+            android:textAlignment="center"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <TextView
+        android:id="@+id/lbl_cm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="60dp"
+        android:layout_toRightOf="@id/height"
+        android:layout_below="@id/lbl_body_title"
+
+        android:text="cm"
+        android:textColor="@color/mainText"
+        android:textSize="30sp" />
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/weight"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/height"
+        android:hint="Peso"
+
+        app:boxStrokeColor="@color/mainSecond"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+
+            android:id="@+id/weight_field"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:inputType="number"
+
+            android:textAlignment="center"
+            android:textSize="30sp"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/lbl_kg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_toRightOf="@id/weight"
+        android:layout_below="@id/height"
+        android:text="Kg"
+        android:textColor="@color/mainText"
+        android:textSize="30dp" />
+
+
+    <!--Next Button-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/body_next"
+        style="@style/next_button"
+
+        android:layout_below="@id/weight"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
+
+
+
+</RelativeLayout>

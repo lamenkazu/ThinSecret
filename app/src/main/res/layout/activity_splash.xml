@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Splash"
+    android:background="@color/mainBackground"
+    >
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".Splash"
+        android:background="@color/mainBackground"
+        android:id="@+id/layoutImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+
+            android:id="@+id/logoImage"
+            android:layout_width="match_parent"
+            android:layout_height="345dp"
+
+            android:transitionName="logo_image"
+
+            android:layout_centerVertical="true"
+            android:layout_marginTop="100sp"
+            android:src="@drawable/logo" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/layoutImage">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="60dp"
+            android:text="@string/title"
+            android:textColor="@color/mainPrimary"
+            android:fontFamily="@font/aclonica"
+
+            android:transitionName="title"
+
+            android:gravity="right"
+            />
+        <TextView
+            android:id="@+id/title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="60dp"
+            android:text="@string/title2"
+            android:textColor="@color/mainSecond"
+            android:fontFamily="@font/aclonica"
+
+            android:transitionName="title2"
+
+            android:layout_toRightOf="@id/title"
+            android:layout_centerHorizontal="true"
+            android:gravity="right"
+            />
+
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="20dp"
+            android:text="@string/subtitle"
+            android:textColor="@color/mainText"
+            android:fontFamily="@font/acme"
+
+
+
+            android:layout_below="@id/title"
+            android:layout_centerHorizontal="true"
+            android:gravity="right"
+            />
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

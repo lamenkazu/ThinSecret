@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signup.InitSignUp"
+    android:background="@color/mainBackground">
+
+
+    <TextView
+        android:id="@+id/actLevel_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/acme"
+
+        android:text="Seu nível de atividade"
+        android:textSize="35dp"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        />
+
+
+    <RadioGroup
+        android:id="@+id/radio_act_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/actLevel_title"
+        android:layout_marginTop="50dp"
+        >
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/btn_sedentary"
+            android:text="Sedentário"
+
+            style="@style/radio_content"
+            />
+        <TextView
+            style="@style/act_lvl_description"
+            android:text="@string/act_lvl_sedentary_description"
+
+            />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            style="@style/radio_content"
+            android:id="@+id/btn_low"
+
+
+            android:layout_marginTop="15dp"
+            android:text="Pouco Ativo"
+
+
+
+            />
+        <TextView
+            style="@style/act_lvl_description"
+            android:text="@string/act_lvl_low_description"
+            android:layout_marginBottom="15dp"
+
+            />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            style="@style/radio_content"
+            android:id="@+id/btn_medium"
+
+            android:text="Ativo"
+
+            />
+        <TextView
+            style="@style/act_lvl_description"
+            android:text="@string/act_lvl_medium_description"
+            />
+
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            style="@style/radio_content"
+            android:id="@+id/btn_high"
+
+            android:layout_marginTop="15dp"
+
+            android:text="Altamente Ativo"
+
+            />
+        <TextView
+            style="@style/act_lvl_description"
+            android:text="@string/act_lvl_high_description"
+            android:layout_marginBottom="15dp"
+
+            />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            style="@style/radio_content"
+            android:id="@+id/btn_extreme"
+
+
+            android:text="Extremamente Ativo"
+
+            />
+        <TextView
+            style="@style/act_lvl_description"
+            android:text="@string/act_lvl_extreme_description"
+
+
+            />
+    </RadioGroup>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/act_next"
+        style="@style/next_button"
+
+        android:layout_below="@id/radio_act_level"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+
+</RelativeLayout>

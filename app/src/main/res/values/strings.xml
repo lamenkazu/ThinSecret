@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">BodyApp</string>
+
+    <string name="altura">Altura</string>
+
+    <string name="init_IDR">Para começar, vamos calcular sua Ingestão Diária Recomendada. Sua IDR é a quantidade ideal de alimentos que você deve consumir todos os dias.</string>
+
+    <string name="init_IDR2">A IDR é gerada de acordo com sua meta nutricional, seu nível de atividade, sua idade, seu peso e outras características pessoais.</string>
+
+    <string name="goal_1">Perder Peso</string>
+    <string name="goal_2">Manter Peso</string>
+    <string name="goal_3">Ganhar Peso</string>
+
+    <string name="title">Thin</string>
+    <string name="title2">Secret</string>
+    <string name="subtitle">Controle Seu Corpo</string>
+
+    <string name="act_lvl_sedentary_description">Pouco ou nenhum exercício</string>
+    <string name="act_lvl_low_description">Exercício leve 1 a 3 dias por semana</string>
+    <string name="act_lvl_medium_description">Exercício moderado, fazer desporto 3 a 5 dias por semana</string>
+    <string name="act_lvl_high_description">Exercício pesado de 5 a 6 dias por semana</string>
+    <string name="act_lvl_extreme_description">Exercício pesado diariamente e até 2x por dia</string>
+
+</resources>

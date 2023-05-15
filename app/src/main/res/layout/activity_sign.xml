@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignActivity"
+    android:background="@color/mainBackground"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:id="@+id/sign_logo"
+        android:layout_width="150dp"
+        android:layout_height="130dp"
+        android:src="@drawable/logo"
+        android:layout_centerHorizontal="true"
+
+        android:transitionName="logo_image"
+
+        />
+
+    <RelativeLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sign_logo"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+
+            android:transitionName="title"
+
+            android:fontFamily="@font/aclonica"
+            android:text="@string/title"
+            android:textColor="@color/mainPrimary"
+            android:textSize="30dp"
+
+            />
+
+        <TextView
+            android:id="@+id/title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@id/title"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-29.5dp"
+            android:fontFamily="@font/aclonica"
+            android:text="@string/title2"
+
+            android:textColor="@color/mainSecond"
+
+            android:textSize="50dp"
+            android:transitionName="title2" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/titleLayout"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="100sp"
+
+        >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/newUserButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+
+            android:text="Sou um novo usuario"
+            android:textSize="20dp"
+
+            android:textColor="@color/mainText"
+            android:fontFamily="@font/acme"
+            android:backgroundTint="@color/mainPrimary"
+
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/newUserButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+
+            android:text="Ja possuo uma conta"
+            android:textSize="20dp"
+
+            android:textColor="@color/mainText"
+            android:fontFamily="@font/acme"
+            android:backgroundTint="@color/mainSecond"
+            />
+    </RelativeLayout>
+
+
+</RelativeLayout>

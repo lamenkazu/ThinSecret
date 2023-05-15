@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signup.GenderSignUp"
+    android:background="@color/mainBackground">
+
+    <TextView
+        android:id="@+id/lblDec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Sou transgenero?"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/acme"
+
+        android:layout_marginTop="100dp"/>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/toggle_orientation"
+        android:layout_below="@id/lblDec"
+
+        android:layout_centerHorizontal="true">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/toggle_identification"
+            app:icon="@drawable/ic_baseline_transgender_24"
+
+            android:id="@+id/toggle_orientation_button"
+
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:insetTop="0dp"
+
+
+
+            />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+
+    <!--    Toggle Gender-->
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggle_group_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toggle_orientation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        >
+
+
+
+        <com.google.android.material.button.MaterialButton
+
+            android:id="@+id/toggle_boy"
+            style="@style/toggle_gender"
+            app:icon="@drawable/boy"
+            app:iconTint="@color/mainAccent"
+
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/toggle_girl"
+            style="@style/toggle_gender"
+
+            app:icon="@drawable/girl"
+
+            app:iconTint="@color/mainAccent"
+
+
+            />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/gender_next"
+        style="@style/next_button"
+
+        android:layout_below="@id/toggle_group_gender"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"/>
+
+
+
+
+
+</RelativeLayout>

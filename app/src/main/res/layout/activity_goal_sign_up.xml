@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signup.InitSignUp"
+    android:background="@color/mainBackground">
+
+
+    <TextView
+        android:id="@+id/goal_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/acme"
+
+        android:text="Qual seu objetivo atual?"
+        android:textSize="35dp"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        />
+
+
+    <RadioGroup
+        android:id="@+id/radio_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/goal_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        >
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/btn_loss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/goal_1"
+            android:textColor="@color/mainText"
+            android:textSize="25dp"
+            />
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/btn_keep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/goal_2"
+
+            android:textColor="@color/mainText"
+            android:textSize="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            />
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/btn_gain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/goal_3"
+
+            android:textColor="@color/mainText"
+            android:textSize="25dp"
+            />
+    </RadioGroup>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/goal_next"
+        style="@style/next_button"
+
+        android:layout_below="@id/radio_goal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"/>
+
+
+</RelativeLayout>

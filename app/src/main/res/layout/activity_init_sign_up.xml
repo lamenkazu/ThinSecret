@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signup.InitSignUp"
+    android:background="@color/mainBackground">
+
+    <TextView
+        android:id="@+id/lblIDR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:text="@string/init_IDR"
+        android:textColor="@color/mainText"
+        android:fontFamily="@font/acme"
+        android:textSize="25dp"
+
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="200dp"
+
+        />
+
+    <TextView
+        android:id="@+id/lblIDR_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:text="@string/init_IDR2"
+        android:textColor="@color/mainText"
+        android:fontFamily="@font/acme"
+        android:textSize="25dp"
+
+        android:layout_below="@id/lblIDR"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="40dp"
+
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/init_next"
+        style="@style/next_button"
+
+        android:layout_below="@id/lblIDR_2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"/>
+
+
+</RelativeLayout>
