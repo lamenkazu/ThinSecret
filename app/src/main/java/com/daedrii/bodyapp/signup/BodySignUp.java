@@ -42,8 +42,13 @@ public class BodySignUp extends AppCompatActivity {
                     Integer givenHeight = Integer.parseInt(heigh.getText().toString());
                     Integer givenWeight = Integer.parseInt(weight.getText().toString());
 
+                    Double heighInM = Double.parseDouble(heigh.getText().toString()) / 100;
+
+                    Double IMC = (givenWeight) / (heighInM * heighInM);
+
                     InitSignUp.newUserBodyInfo.setHeight(givenHeight);
                     InitSignUp.newUserBodyInfo.setWeight(givenWeight);
+                    InitSignUp.newUserBodyInfo.setIMC(IMC);
 
                     Intent intent = new Intent(BodySignUp.this, AgeSignUp.class);
                     startActivity(intent);

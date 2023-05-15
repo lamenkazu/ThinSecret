@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.daedrii.bodyapp.BodyInfo;
 import com.daedrii.bodyapp.HomeScreen;
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.SignActivity;
@@ -25,6 +26,28 @@ import java.util.Locale;
 
 public class AgeSignUp extends AppCompatActivity {
 
+    private void finalizaCalculosCorporais(){
+        //Finaliza Calculos Corporais
+        BodyInfo bodyInfo = InitSignUp.newUserBodyInfo;
+        Double metBasal = bodyInfo.getActLevel().getMetBasal();
+        Double step1, step2, step3, somaSteps;
+
+        if(bodyInfo.getGender() == BodyInfo.Sex.MASCULINO){
+            step1 = 13.7 * bodyInfo.getWeight();
+            step2 = 5.0 * bodyInfo.getHeight();
+            step3 = 6.8 * bodyInfo.getAge();
+            somaSteps = 66 + (step1 + step2 - step3);
+            InitSignUp.newUserBodyInfo.setIDR(metBasal * somaSteps);
+
+        }else if(bodyInfo.getGender() == BodyInfo.Sex.FEMININO){
+            step1 = 9.6 * bodyInfo.getWeight();
+            step2 = 1.8 * bodyInfo.getHeight();
+            step3 = 4.7 * bodyInfo.getAge();
+            somaSteps = 655 + (step1 + step2 - step3);
+            InitSignUp.newUserBodyInfo.setIDR(metBasal * somaSteps);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +61,6 @@ public class AgeSignUp extends AppCompatActivity {
         materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
             @Override
             public void onPositiveButtonClick(Long selection) {
-
-                Log.d("date", "" + selection);
 
                 Integer anoAtual = new Date().getYear();
                 Integer mesAtual = new Date().getMonth();
@@ -59,8 +80,11 @@ public class AgeSignUp extends AppCompatActivity {
                 if(idade < 14){
                     Toast.makeText(AgeSignUp.this, "Idade muito pequena", Toast.LENGTH_SHORT).show();
                 }else{
+
                     InitSignUp.newUserBodyInfo.setAge((int) idade);
                     InitSignUp.newUserBodyInfo.setBirthDate(date);
+
+                    finalizaCalculosCorporais();
 
                     Intent intent = new Intent(AgeSignUp.this, HomeScreen.class);
                     startActivity(intent);

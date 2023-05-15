@@ -15,6 +15,8 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+
+        }
         Log.d("result", InitSignUp.newUserBodyInfo.toString());
 
 

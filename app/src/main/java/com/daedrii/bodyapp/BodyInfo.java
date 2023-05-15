@@ -16,6 +16,30 @@ public class BodyInfo {
 
     private ActLevel actLevel;
 
+    private Double IMC;
+
+    private Double IDR;
+
+    public void setGender(Sex gender) {
+        this.gender = gender;
+    }
+
+    public Double getIMC() {
+        return IMC;
+    }
+
+    public void setIMC(Double IMC) {
+        this.IMC = IMC;
+    }
+
+    public Double getIDR() {
+        return IDR;
+    }
+
+    public void setIDR(Double IDR) {
+        this.IDR = IDR;
+    }
+
     public BodyInfo() {
     }
 
@@ -26,6 +50,11 @@ public class BodyInfo {
         ACTIVE(1.55),
         HIGH_ACTIVE(1.725),
         EXTREME_ACTIVE(1.9);
+
+        public Double getMetBasal() {
+            return metBasal;
+        }
+
 
         private Double metBasal;
 
@@ -44,13 +73,16 @@ public class BodyInfo {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "BodyInfo{" +
                 "age=" + age +
+                ", birthDate='" + birthDate + '\'' +
                 ", weight=" + weight +
                 ", height=" + height +
                 ", gender=" + gender +
                 ", goal=" + goal +
                 ", actLevel=" + actLevel +
+                ", IMC=" + IMC +
+                ", IDR=" + IDR +
                 '}';
     }
 
