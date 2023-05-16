@@ -13,63 +13,63 @@
         android:theme="@style/Theme.BodyApp"
         tools:targetApi="31" >
         <activity
-            android:name=".signup.BodySignUp"
+            android:name=".view.sign.signup.BodySignUp"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".HomeScreen"
+            android:name=".view.HomeScreen"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".signup.GenderSignUp"
+            android:name=".view.sign.signup.GenderSignUp"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".signup.ActLevelSignUp"
+            android:name=".view.sign.signup.ActLevelSignUp"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SignActivity"
+            android:name=".view.sign.SignActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".signup.GoalSignUp"
+            android:name=".view.sign.signup.GoalSignUp"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".signup.InitSignUp"
+            android:name=".view.sign.signup.InitSignUp"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".signup.AgeSignUp"
+            android:name=".view.sign.signup.AgeSignUp"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Splash"
+            android:name=".view.Splash"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

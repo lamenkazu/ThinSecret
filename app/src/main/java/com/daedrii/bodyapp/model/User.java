@@ -1,4 +1,4 @@
-import com.daedrii.bodyapp.BodyInfo;
+package com.daedrii.bodyapp.model;
 
 public class User {
 

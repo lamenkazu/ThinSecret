@@ -1,16 +1,16 @@
-package com.daedrii.bodyapp.signup;
+package com.daedrii.bodyapp.view.sign.signup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
-import com.daedrii.bodyapp.BodyInfo;
+import com.daedrii.bodyapp.controller.sign.SignUpController;
+import com.daedrii.bodyapp.model.BodyInfo;
 import com.google.android.material.button.MaterialButton;
 
 public class GoalSignUp extends AppCompatActivity {
@@ -35,21 +35,14 @@ public class GoalSignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                int selectedBtnId = radioGroup.getCheckedRadioButtonId();
-
-                if(selectedBtnId == -1)
+                if (!SignUpController.setGoal(radioGroup)){
                     Toast.makeText(GoalSignUp.this, "Nenhum objetivo selecionado", Toast.LENGTH_SHORT).show();
-                else{
-                    if(selectedBtnId == R.id.btn_loss)
-                        InitSignUp.newUserBodyInfo.setGoal(BodyInfo.DietGoal.LOSS);
-                    else if(selectedBtnId == R.id.btn_keep)
-                        InitSignUp.newUserBodyInfo.setGoal(BodyInfo.DietGoal.KEEP);
-                    else if(selectedBtnId == R.id.btn_gain)
-                        InitSignUp.newUserBodyInfo.setGoal(BodyInfo.DietGoal.GAIN);
-
+                }else{
                     Intent intent = new Intent(GoalSignUp.this, GenderSignUp.class);
                     startActivity(intent);
                 }
+
+
             }
         });
     }

@@ -1,4 +1,4 @@
-package com.daedrii.bodyapp.signup;
+package com.daedrii.bodyapp.view.sign.signup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,19 +8,19 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
-import com.daedrii.bodyapp.SignActivity;
+import com.daedrii.bodyapp.controller.sign.SignUpController;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class BodySignUp extends AppCompatActivity {
 
     MaterialButton next;
-    TextInputEditText heigh;
+    TextInputEditText height;
     TextInputEditText weight;
 
     private void startComponents(){
         next = findViewById(R.id.body_next);
-        heigh = findViewById(R.id.heigh_field);
+        height = findViewById(R.id.heigh_field);
         weight = findViewById(R.id.weight_field);
     }
 
@@ -36,19 +36,14 @@ public class BodySignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(heigh.getText().toString().equals("") || weight.getText().toString().equals(""))
+                String heightS = height.getText().toString();
+                String weightS = weight.getText().toString();
+
+                if(heightS.equals("") || weightS.equals(""))
                     Toast.makeText(BodySignUp.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 else{
-                    Integer givenHeight = Integer.parseInt(heigh.getText().toString());
-                    Integer givenWeight = Integer.parseInt(weight.getText().toString());
 
-                    Double heighInM = Double.parseDouble(heigh.getText().toString()) / 100;
-
-                    Double IMC = (givenWeight) / (heighInM * heighInM);
-
-                    InitSignUp.newUserBodyInfo.setHeight(givenHeight);
-                    InitSignUp.newUserBodyInfo.setWeight(givenWeight);
-                    InitSignUp.newUserBodyInfo.setIMC(IMC);
+                    SignUpController.setBodyData(heightS, weightS);
 
                     Intent intent = new Intent(BodySignUp.this, AgeSignUp.class);
                     startActivity(intent);

@@ -1,6 +1,5 @@
-package com.daedrii.bodyapp;
+package com.daedrii.bodyapp.view;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
@@ -15,19 +14,18 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daedrii.bodyapp.R;
+import com.daedrii.bodyapp.view.sign.SignActivity;
+
 public class Splash extends AppCompatActivity {
 
-    Animation logoAnim;
-    Animation titleAnim;
-    Animation subAnim;
+    Animation logoAnim, titleAnim, subAnim;
     ImageView image;
-    TextView title;
-    TextView title2;
-    TextView subtitle;
+    TextView title, title2, subtitle;
 
     private void linkViews(){
         //Animations
-        logoAnim = AnimationUtils.loadAnimation(this,R.anim.splash_logo_anim);
+        logoAnim = AnimationUtils.loadAnimation(this, R.anim.splash_logo_anim);
         titleAnim = AnimationUtils.loadAnimation(this,R.anim.splash_title_anim);
         subAnim = AnimationUtils.loadAnimation(this,R.anim.splash_subtitle_anim);
 
@@ -52,10 +50,8 @@ public class Splash extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
 
-
         //Animations
         linkViews();
-
 
         new Handler().postDelayed(new Runnable() {
             @Override

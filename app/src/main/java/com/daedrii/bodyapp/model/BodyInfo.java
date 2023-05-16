@@ -1,4 +1,4 @@
-package com.daedrii.bodyapp;
+package com.daedrii.bodyapp.model;
 
 public class BodyInfo {
 

@@ -1,4 +1,4 @@
-package com.daedrii.bodyapp.signup;
+package com.daedrii.bodyapp.view.sign.signup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,14 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.daedrii.bodyapp.BodyInfo;
+import com.daedrii.bodyapp.model.BodyInfo;
 import com.daedrii.bodyapp.R;
-import com.daedrii.bodyapp.SignActivity;
 import com.google.android.material.button.MaterialButton;
 
 public class InitSignUp extends AppCompatActivity {
-
-    public static BodyInfo newUserBodyInfo = new BodyInfo();
 
     MaterialButton btnNext;
 
