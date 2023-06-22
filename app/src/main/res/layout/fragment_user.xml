@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.home.UserFragment"
+    android:padding="20dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="600dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lbl_presentation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="100dp"
+
+                android:text="Nome, tantos anos "
+                android:fontFamily="@font/acme"
+                android:textSize="28dp"/>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/body_layout"
+                android:layout_below="@id/lbl_presentation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:layout_centerHorizontal="true">
+
+                <com.google.android.material.textfield.TextInputLayout
+
+                    android:id="@+id/user_weight"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeColor="@color/mainSecond"
+                    android:hint="peso"
+                    android:layout_marginRight="30dp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_toRightOf="@id/user_weight"
+
+                    android:id="@+id/user_height"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeColor="@color/mainSecond"
+                    android:hint="altura"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/body_calc"
+
+                android:layout_below="@id/body_layout"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+                <com.google.android.material.textfield.TextInputLayout
+
+                    android:id="@+id/user_IMC"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeColor="@color/mainSecond"
+                    android:hint="IMC"
+                    android:layout_marginRight="30dp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+
+                        android:inputType="none"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_toRightOf="@id/user_weight"
+
+                    android:id="@+id/user_IDR"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeColor="@color/mainSecond"
+                    android:hint="IDR"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+
+                        android:inputType="none"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/spinnerLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/body_calc"
+                android:orientation="vertical"
+                android:layout_centerHorizontal="true"
+                >
+
+                <Spinner
+                    android:layout_below="@id/body_calc"
+                    android:id="@+id/goalDropdownMenu"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+
+                    android:background="@null"
+                    android:autofillHints="uai"
+
+                    />
+
+                <Spinner
+                    android:layout_below="@id/goalDropdownMenu"
+                    android:id="@+id/genderDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:autofillHints="uai"
+                    />
+
+                <Spinner
+                    android:layout_below="@id/genderDropdownMenu"
+                    android:id="@+id/actLevelDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:autofillHints="uai"
+                    />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/spinnerLayout"
+                android:backgroundTint="@color/mainAccent"
+                app:cornerRadius="8dp"
+                android:text="Redefinir"
+                android:textColor="@color/mainText"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"
+
+                />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:backgroundTint="#556B2F"
+                android:text="Salvar Alterações"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:textColor="@color/mainBackground"
+                android:fontFamily="@font/acme"
+
+                app:cornerRadius="8dp"
+
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@id/btn_logout"
+                android:layout_marginRight="20dp"
+
+
+                />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:backgroundTint="#b23"
+                android:text="LogOut"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/mainBackground"
+                android:fontFamily="@font/acme"
+
+                app:cornerRadius="8dp"
+
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+
+
+                />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

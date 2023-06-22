@@ -20,5 +20,7 @@
     <string name="act_lvl_medium_description">Exercício moderado, fazer desporto 3 a 5 dias por semana</string>
     <string name="act_lvl_high_description">Exercício pesado de 5 a 6 dias por semana</string>
     <string name="act_lvl_extreme_description">Exercício pesado diariamente e até 2x por dia</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

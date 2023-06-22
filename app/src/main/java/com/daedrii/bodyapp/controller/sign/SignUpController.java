@@ -1,56 +1,42 @@
 package com.daedrii.bodyapp.controller.sign;
 
-import android.content.Intent;
 import android.content.res.Resources;
-import android.icu.text.SimpleDateFormat;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import androidx.core.content.res.ResourcesCompat;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.model.BodyInfo;
-import com.daedrii.bodyapp.view.HomeScreen;
-import com.daedrii.bodyapp.view.sign.signup.AgeSignUp;
-import com.daedrii.bodyapp.view.sign.signup.InitSignUp;
 import com.google.android.material.button.MaterialButton;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.Locale;
 
 public class SignUpController {
 
     public static BodyInfo newUserBodyInfo = new BodyInfo();
 
     public static Boolean handleAgeInfos(Long selection){
-        Integer anoAtual = new Date().getYear();
-        Integer mesAtual = new Date().getMonth();
-        Integer diaAtual = new Date().getDay();
+        LocalDate currentDate = LocalDate.now();
+        LocalDate birthDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(selection), ZoneId.systemDefault()).toLocalDate();
 
-        Integer anoNasc = new Date(selection).getYear();
-        Integer mesNasc = new Date(selection).getMonth();
-        Integer diaNasc = new Date(selection).getDay();
+        String date = birthDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
-        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date(selection));
+        long idade = ChronoUnit.YEARS.between(birthDate, currentDate);
 
-        LocalDate endDate = LocalDate.of(anoAtual, mesAtual, diaAtual);
-        LocalDate startDate = LocalDate.of(anoNasc, mesNasc, diaNasc);
-
-        long idade = ChronoUnit.YEARS.between(startDate, endDate);
-
-        if(idade < 14){
+        if (idade < 14) {
             return false;
-        }else{
-
+        } else {
             newUserBodyInfo.setAge((int) idade);
             newUserBodyInfo.setBirthDate(date);
 
             finalizaCalculosCorporais();
 
             return true;
-
         }
     }
 

@@ -46,5 +46,21 @@
         <item name="iconTint">@color/mainText</item>
         <item name="icon">@drawable/ic_baseline_arrow_forward_24</item>
     </style>
+
+    <style name="done_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">@color/mainPrimary</item>
+        <item name="cornerRadius">100dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="iconSize">40dp</item>
+        <item name="iconGravity">textEnd</item>
+        <item name="iconTint">@color/mainText</item>
+        <item name="icon">@drawable/baseline_done_outline_24</item>
+    </style>
+
+    <style name="SpinnerTextStyle" parent="Widget.AppCompat.Spinner.DropDown">
+        <item name="android:textSize">50sp</item>
+    </style>
     
 </resources>

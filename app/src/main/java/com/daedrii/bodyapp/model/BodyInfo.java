@@ -1,5 +1,9 @@
 package com.daedrii.bodyapp.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class BodyInfo {
 
     private int age;
@@ -64,7 +68,18 @@ public class BodyInfo {
     }
 
     public enum DietGoal{
-        LOSS, KEEP, GAIN;
+        LOSS("Perder Peso"),
+        KEEP("Manter Peso"),
+        GAIN("Ganhar Peso");
+
+        private String stringGoal;
+        public String getStringGoal() {
+            return stringGoal;
+        }
+
+        DietGoal(String stringGoal) {this.stringGoal = stringGoal;}
+
+
     }
 
     public enum Sex{
@@ -140,5 +155,9 @@ public class BodyInfo {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    public static List<DietGoal> getDietGoalValues() {
+        return Arrays.asList(DietGoal.values());
     }
 }

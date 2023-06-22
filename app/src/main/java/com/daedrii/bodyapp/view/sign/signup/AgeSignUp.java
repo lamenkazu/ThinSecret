@@ -3,21 +3,13 @@ package com.daedrii.bodyapp.view.sign.signup;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.sign.SignUpController;
-import com.daedrii.bodyapp.model.BodyInfo;
-import com.daedrii.bodyapp.view.HomeScreen;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.Locale;
 
 public class AgeSignUp extends AppCompatActivity {
 
@@ -40,14 +32,12 @@ public class AgeSignUp extends AppCompatActivity {
                 if(!SignUpController.handleAgeInfos(selection)){
                     Toast.makeText(AgeSignUp.this, "Idade muito pequena", Toast.LENGTH_SHORT).show();
                 }else{
-                    Intent intent = new Intent(AgeSignUp.this, HomeScreen.class);
+                    Intent intent = new Intent(AgeSignUp.this, UserSignUp.class);
                     startActivity(intent);
                 }
 
-
-
-
             }
+
         });
 
         materialDatePicker.show(getSupportFragmentManager(), "tag");

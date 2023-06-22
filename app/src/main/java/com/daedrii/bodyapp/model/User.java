@@ -8,9 +8,18 @@ public class User {
 
     private String senha;
 
-    private String username;
-
     private BodyInfo bodyInfo;
+
+    public User(String name, String email, String senha, BodyInfo bodyInfo){
+
+        this.name = name;
+        this.bodyInfo = bodyInfo;
+        this.senha = senha;
+        this.email = email;
+    }
+
+    public User(){}
+
 
     public String getName() {
         return name;
@@ -36,13 +45,6 @@ public class User {
         this.senha = senha;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public BodyInfo getBodyInfo() {
         return bodyInfo;
