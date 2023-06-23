@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Pair;
@@ -15,10 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daedrii.bodyapp.R;
+import com.daedrii.bodyapp.view.home.HomeScreen;
 import com.daedrii.bodyapp.view.sign.SignActivity;
+import com.daedrii.bodyapp.view.sign.SignInActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Splash extends AppCompatActivity {
-
+    FirebaseAuth mAuth;
     Animation logoAnim, titleAnim, subAnim;
     ImageView image;
     TextView title, title2, subtitle;
@@ -40,6 +45,8 @@ public class Splash extends AppCompatActivity {
         title.setAnimation(titleAnim);
         title2.setAnimation(titleAnim);
         subtitle.setAnimation(subAnim);
+
+        mAuth = FirebaseAuth.getInstance();
     }
 
 
@@ -56,16 +63,25 @@ public class Splash extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(Splash.this, SignActivity.class);
+
 
                 Pair[] pairs = new Pair[3];
                 pairs[0] = new Pair<View, String>(image, "logo_image");
                 pairs[1] = new Pair<View, String>(title, "title");
                 pairs[2] = new Pair<View, String>(title2, "title2");
 
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Splash.this, pairs);
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if(currentUser == null){
+                    Intent intent = new Intent(Splash.this, SignActivity.class);
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Splash.this, pairs);
+                    startActivity(intent, options.toBundle());
+                    finish();
+                }else{
+                    Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                    startActivity(intent);
+                    finish();
+                }
 
-                startActivity(intent, options.toBundle());
 
             }
         }, 3500);

@@ -14,9 +14,6 @@ import okhttp3.Response;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
-import oauth.signpost.exception.OAuthCommunicationException;
-import oauth.signpost.exception.OAuthExpectationFailedException;
-import oauth.signpost.exception.OAuthMessageSignerException;
 
 public class FatSecretApiService {
     private static final String BASE_URL = "https://platform.fatsecret.com/rest/server.api";

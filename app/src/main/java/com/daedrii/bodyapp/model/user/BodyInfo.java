@@ -1,4 +1,4 @@
-package com.daedrii.bodyapp.model;
+package com.daedrii.bodyapp.model.user;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,13 +6,11 @@ import java.util.List;
 
 public class BodyInfo {
 
-    private int age;
+    private Integer age;
 
-    private String birthDate;
+    private Integer weight;
 
-    private int weight;
-
-    private int height;
+    private Integer height;
 
     private Sex gender;
 
@@ -90,7 +88,6 @@ public class BodyInfo {
     public String toString() {
         return "BodyInfo{" +
                 "age=" + age +
-                ", birthDate='" + birthDate + '\'' +
                 ", weight=" + weight +
                 ", height=" + height +
                 ", gender=" + gender +
@@ -109,25 +106,25 @@ public class BodyInfo {
         return goal;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public int getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public int getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-    }
+//    public String getBirthDate() {
+//        return birthDate;
+//    }
+//
+//    public void setBirthDate(String birthDate) {
+//        this.birthDate = birthDate;
+//    }
 
     public Sex getGender() {
         return gender;

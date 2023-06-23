@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.sign.SignUpController;
-import com.daedrii.bodyapp.model.BodyInfo;
 import com.google.android.material.button.MaterialButton;
 
 public class GoalSignUp extends AppCompatActivity {

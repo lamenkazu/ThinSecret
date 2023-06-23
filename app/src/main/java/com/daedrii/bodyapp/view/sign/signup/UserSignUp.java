@@ -1,57 +1,78 @@
 package com.daedrii.bodyapp.view.sign.signup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.sign.SignUpController;
-import com.daedrii.bodyapp.model.User;
-import com.daedrii.bodyapp.model.UserSingleton;
-import com.daedrii.bodyapp.view.home.HomeScreen;
+import com.daedrii.bodyapp.view.sign.SignInActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class UserSignUp extends AppCompatActivity {
 
     MaterialButton done;
+    TextInputEditText name, phone, email, password, passwordConfirm;
+    LinearProgressIndicator progressIndicator;
 
-    TextInputEditText name, email, password;
 
-    UserSingleton userSingleton = UserSingleton.getInstance();
+    private void initComponents(){
+        done = findViewById(R.id.user_done);
+        name = findViewById(R.id.signup_name_txt);
+        phone = findViewById(R.id.signup_phone_txt);
+        email = findViewById(R.id.signup_email_txt);
+        password = findViewById(R.id.signup_password_txt);
+        passwordConfirm = findViewById(R.id.signup_password_confirm_txt);
+        progressIndicator = findViewById(R.id.register_progress);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_sign_up);
 
-        done = findViewById(R.id.user_done);
-        name = findViewById(R.id.txt_name);
-        email = findViewById(R.id.txt_email);
-        password = findViewById(R.id.txt_password);
+        initComponents();
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                progressIndicator.setVisibility(View.VISIBLE);
+
                 String userName = name.getText().toString();
+                String userPhone = phone.getText().toString();
                 String userMail = email.getText().toString();
                 String userPassword = password.getText().toString();
+                String userPasswordConfirm = passwordConfirm.getText().toString();
 
-
-                if(userName.equals("") || userMail.equals("") || userPassword.equals(""))
+                if(userPasswordConfirm.equals("") || userMail.equals("") || userPassword.equals("") || userName.equals("") || userPhone.equals(""))
                     Toast.makeText(UserSignUp.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 else{
 
-                    userSingleton.setUser(new User(userName, userMail, userPassword, SignUpController.newUserBodyInfo));
+                    if(userPassword.equals(userPasswordConfirm)){
 
-                    Intent intent = new Intent(UserSignUp.this, HomeScreen.class);
-                    startActivity(intent);
+                        SignUpController.handleUserDataSignUp(userName, userPhone,
+                                                              userMail, userPassword,
+                                                              progressIndicator,
+                                                              getApplicationContext());
+
+                        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                        startActivity(intent);
+                        finish();
+
+                        }
                 }
-
             }
         });
     }

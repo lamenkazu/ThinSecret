@@ -12,10 +12,11 @@ import com.google.android.material.button.MaterialButton;
 
 public class SignActivity extends AppCompatActivity {
 
-    MaterialButton newSignUp;
+    MaterialButton newSignUp, goToSignIn;
 
     private void setComponents(){
         newSignUp = findViewById(R.id.newUserButton);
+        goToSignIn = findViewById(R.id.btn_goto_sign_in);
     }
 
     @Override
@@ -29,6 +30,14 @@ public class SignActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent signUpIntent = new Intent(SignActivity.this, InitSignUp.class);
+                startActivity(signUpIntent);
+            }
+        });
+
+        goToSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signUpIntent = new Intent(SignActivity.this, SignInActivity.class);
                 startActivity(signUpIntent);
             }
         });

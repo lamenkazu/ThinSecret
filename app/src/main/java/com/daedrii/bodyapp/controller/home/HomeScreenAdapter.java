@@ -1,4 +1,4 @@
-package com.daedrii.bodyapp.controller.homeadapter;
+package com.daedrii.bodyapp.controller.home;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

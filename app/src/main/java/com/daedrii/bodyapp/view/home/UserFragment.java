@@ -1,10 +1,10 @@
 package com.daedrii.bodyapp.view.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +13,24 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.daedrii.bodyapp.R;
-import com.daedrii.bodyapp.model.BodyInfo;
-import com.daedrii.bodyapp.model.UserSingleton;
-import com.google.android.material.textfield.MaterialAutoCompleteTextView;
-import com.google.android.material.textfield.TextInputLayout;
+import com.daedrii.bodyapp.model.user.BodyInfo;
+import com.daedrii.bodyapp.view.sign.SignActivity;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 public class UserFragment extends Fragment {
-    private UserSingleton userSingleton = UserSingleton.getInstance();
+    FirebaseUser user;
+    FirebaseAuth mAuth;
+    MaterialTextView presentation;
+    MaterialButton btnLogOut;
+
+    //Variaveis corporais
+    private TextInputEditText weight, height, IMC, IDR;
 
     //Variaveis de Objetivo
     private Spinner goalSpinner;
@@ -41,6 +50,17 @@ public class UserFragment extends Fragment {
 
 
     private void initComponents(View fragmentView){
+        //user
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+        //Label Apresentação
+        presentation = fragmentView.findViewById(R.id.lbl_presentation);
+        presentation.setText("Oi, " + user.getDisplayName());
+
+        //Init Buttons
+        btnLogOut = fragmentView.findViewById(R.id.btn_logout);
+
         //Init GoalSpinner
         goalSpinner = fragmentView.findViewById(R.id.goalDropdownMenu);
         goalForUser = new ArrayList<>();
@@ -78,6 +98,12 @@ public class UserFragment extends Fragment {
         actLevelDropdownAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         actLevelSpinner.setAdapter(actLevelDropdownAdapter);
 
+//      Init Body info
+        this.weight = fragmentView.findViewById(R.id.user_weight_txt);
+        this.height = fragmentView.findViewById(R.id.user_height_txt);
+        this.IMC = fragmentView.findViewById(R.id.user_imc_txt);
+        this.IDR = fragmentView.findViewById(R.id.user_idr_txt);
+
     }
 
 
@@ -86,9 +112,14 @@ public class UserFragment extends Fragment {
         super.onResume();
 
         // Definir valor predefinido com base no que está definido no perfil
-        goalSpinner.setSelection(userSingleton.getUser().getBodyInfo().getGoal().ordinal());
-        genderSpinner.setSelection(userSingleton.getUser().getBodyInfo().getGender().ordinal());
-        actLevelSpinner.setSelection(userSingleton.getUser().getBodyInfo().getActLevel().ordinal());
+//        goalSpinner.setSelection(userSingleton.getUser().getBodyInfo().getGoal().ordinal());
+//        genderSpinner.setSelection(userSingleton.getUser().getBodyInfo().getGender().ordinal());
+//        actLevelSpinner.setSelection(userSingleton.getUser().getBodyInfo().getActLevel().ordinal());
+
+//        this.weight.setText(userSingleton.getUser().getBodyInfo().getWeight().toString());
+//        this.height.setText(userSingleton.getUser().getBodyInfo().getHeight().toString());
+//        this.IMC.setText(userSingleton.getUser().getBodyInfo().getIMC().toString());
+//        this.IDR.setText(userSingleton.getUser().getBodyInfo().getIDR().toString());
 
     }
 
@@ -99,6 +130,16 @@ public class UserFragment extends Fragment {
         View fragmentView =  inflater.inflate(R.layout.fragment_user, container, false);
 
         initComponents(fragmentView);
+
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent intent = new Intent(fragmentView.getContext(), SignActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
 
         goalSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

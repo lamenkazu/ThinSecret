@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.sign.SignActivity"
     android:background="@color/mainBackground"
-    android:orientation="vertical"
     >
 
     <ImageView
@@ -88,6 +87,7 @@
             />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_goto_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/newUserButton"
