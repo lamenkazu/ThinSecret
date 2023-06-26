@@ -23,6 +23,18 @@ public class Serving {
     private int calcium;
     private int iron;
 
+    @Override
+    public String toString() {
+        return "Serving{" +
+                "servingId='" + servingId + '\'' +
+                ", servingDescription='" + servingDescription + '\'' +
+                ", measurementDescription='" + measurementDescription + '\'' +
+                ", calories=" + calories +
+                ", carbohydrate=" + carbohydrate +
+                ", protein=" + protein +
+                '}';
+    }
+
     public Serving(String servingId, String servingDescription, String servingUrl, double metricServingAmount, String metricServingUnit, double numberOfUnits, String measurementDescription, int calories, double carbohydrate, double protein, double fat, double saturatedFat, double monounsaturatedFat, double transFat, int cholesterol, int sodium, int potassium, double fiber, double sugar, int calcium, int iron) {
         this.servingId = servingId;
         this.servingDescription = servingDescription;

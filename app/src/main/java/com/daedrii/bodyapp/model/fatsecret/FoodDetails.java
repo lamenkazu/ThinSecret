@@ -18,7 +18,7 @@ public class FoodDetails {
                 ", brandName='" + brandName + '\'' +
                 ", foodType='" + foodType + '\'' +
                 ", foodUrl='" + foodUrl + '\'' +
-                ", servings=" + servings +
+                ", servings=" + servings.toString()+
                 '}';
     }
 

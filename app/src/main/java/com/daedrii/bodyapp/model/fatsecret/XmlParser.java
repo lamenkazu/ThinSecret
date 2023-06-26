@@ -13,6 +13,39 @@ import java.util.List;
 
 public class XmlParser {
 
+    public static List<FoodDetails> parseFoodSearchResults(String xmlData) {
+        List<FoodDetails> searchResults = new ArrayList<>();
+
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document document = builder.parse(new InputSource(new StringReader(xmlData)));
+
+            Element rootElement = document.getDocumentElement();
+
+            NodeList foodNodes = rootElement.getElementsByTagName("food");
+            for (int i = 0; i < foodNodes.getLength(); i++) {
+                Element foodElement = (Element) foodNodes.item(i);
+
+                String foodId = getElementValue(foodElement, "food_id");
+                String foodName = getElementValue(foodElement, "food_name");
+                String brandName = getElementValue(foodElement, "brand_name");
+                String foodType = getElementValue(foodElement, "food_type");
+                String foodUrl = getElementValue(foodElement, "food_url");
+
+                // Parse servings
+                List<Serving> servings = parseServings(foodElement);
+
+                FoodDetails foodDetails = new FoodDetails(foodId, foodName, brandName, foodType, foodUrl, servings);
+                searchResults.add(foodDetails);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return searchResults;
+    }
+
     public static FoodDetails parseFoodDetails(String xmlData) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

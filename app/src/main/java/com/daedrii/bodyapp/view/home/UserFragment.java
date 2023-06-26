@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +14,25 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.daedrii.bodyapp.R;
+import com.daedrii.bodyapp.controller.home.HomeController;
 import com.daedrii.bodyapp.model.user.BodyInfo;
 import com.daedrii.bodyapp.view.sign.SignActivity;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class UserFragment extends Fragment {
     FirebaseUser user;
     FirebaseAuth mAuth;
     MaterialTextView presentation;
-    MaterialButton btnLogOut;
+    MaterialButton btnLogOut, btnResetData;
+    LinearProgressIndicator progress;
 
     //Variaveis corporais
     private TextInputEditText weight, height, IMC, IDR;
@@ -54,12 +59,15 @@ public class UserFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
+        //Progress Data Indicator
+        progress = fragmentView.findViewById(R.id.user_progress_data);
+
         //Label Apresentação
         presentation = fragmentView.findViewById(R.id.lbl_presentation);
-        presentation.setText("Oi, " + user.getDisplayName());
 
         //Init Buttons
         btnLogOut = fragmentView.findViewById(R.id.btn_logout);
+        btnResetData = fragmentView.findViewById(R.id.btn_reset_data);
 
         //Init GoalSpinner
         goalSpinner = fragmentView.findViewById(R.id.goalDropdownMenu);
@@ -111,16 +119,27 @@ public class UserFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // Definir valor predefinido com base no que está definido no perfil
-//        goalSpinner.setSelection(userSingleton.getUser().getBodyInfo().getGoal().ordinal());
-//        genderSpinner.setSelection(userSingleton.getUser().getBodyInfo().getGender().ordinal());
-//        actLevelSpinner.setSelection(userSingleton.getUser().getBodyInfo().getActLevel().ordinal());
+        setUserDataOnComponents();
 
-//        this.weight.setText(userSingleton.getUser().getBodyInfo().getWeight().toString());
-//        this.height.setText(userSingleton.getUser().getBodyInfo().getHeight().toString());
-//        this.IMC.setText(userSingleton.getUser().getBodyInfo().getIMC().toString());
-//        this.IDR.setText(userSingleton.getUser().getBodyInfo().getIDR().toString());
+    }
 
+    private void setUserDataOnComponents(){
+        HomeController.getUserData(userInfo -> {
+            progress.setVisibility(View.GONE);
+            DecimalFormat decimalFormat = new DecimalFormat("#");
+
+            this.presentation.setText(userInfo.getName() + ", " + userInfo.getBodyInfo().getAge() + " anos" );
+
+            this.weight.setText(userInfo.getBodyInfo().getWeight().toString());
+            this.height.setText(userInfo.getBodyInfo().getHeight().toString());
+            this.IMC.setText(decimalFormat.format(userInfo.getBodyInfo().getIMC()));
+            this.IDR.setText(decimalFormat.format(userInfo.getBodyInfo().getIDR()));
+
+            // Definir valor predefinido com base no que está definido no perfil
+            goalSpinner.setSelection(userInfo.getBodyInfo().getGoal().ordinal());
+            genderSpinner.setSelection(userInfo.getBodyInfo().getGender().ordinal());
+            actLevelSpinner.setSelection(userInfo.getBodyInfo().getActLevel().ordinal());
+        });
     }
 
     @Override
@@ -131,6 +150,9 @@ public class UserFragment extends Fragment {
 
         initComponents(fragmentView);
 
+        btnResetData.setOnClickListener(v -> {
+            setUserDataOnComponents();
+        });
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

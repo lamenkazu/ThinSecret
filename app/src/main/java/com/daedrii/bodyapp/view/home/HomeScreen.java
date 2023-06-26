@@ -1,5 +1,6 @@
 package com.daedrii.bodyapp.view.home;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -41,6 +42,7 @@ public class HomeScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.Theme_BodyApp_WithActionBar); // Aplica o novo tema
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
@@ -55,7 +57,7 @@ public class HomeScreen extends AppCompatActivity {
 
         adapter = new HomeScreenAdapter(fragmentManager, getLifecycle());
         viewPager.setAdapter(adapter);
-        viewPager.setUserInputEnabled(false);
+        viewPager.setUserInputEnabled(true);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

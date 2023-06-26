@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="5dp"
+    >
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/mainAccent"
+        style="@style/Widget.Material3.CardView.Outlined"
+        app:cardCornerRadius="12dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lbl_item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FoodName"
+                android:textSize="18sp"
+                android:fontFamily="@font/aclonica"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lbl_item_description"
+
+                android:layout_below="@id/lbl_item_title"
+
+                android:textStyle="italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/acme"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/mainText"
+                android:textSize="12sp"
+                android:text="blablablablablablablablablablablablablablablablablablablablabla"
+                />
+
+        </RelativeLayout>
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</RelativeLayout>

@@ -21,6 +21,16 @@ public class UserInfo {
 
     public UserInfo(){}
 
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", bodyInfo=" + bodyInfo +
+                '}';
+    }
 
     public String getName() {
         return name;

@@ -62,5 +62,10 @@
     <style name="SpinnerTextStyle" parent="Widget.AppCompat.Spinner.DropDown">
         <item name="android:textSize">50sp</item>
     </style>
+
+    <style name="Theme.BodyApp.WithActionBar" parent="Theme.BodyApp">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+    </style>
     
 </resources>

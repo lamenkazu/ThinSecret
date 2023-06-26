@@ -44,7 +44,10 @@ public class SignUpController {
 
 
 
-    public static void handleUserDataSignUp(String userName, String userPhone, String userMail, String userPassword, LinearProgressIndicator progressIndicator, Context applicationContext){
+    public static void handleUserDataSignUp(String userName, String userPhone,
+                                            String userMail, String userPassword,
+                                            LinearProgressIndicator progressIndicator,
+                                            Context applicationContext){
         newUserInfo.setEmail(userMail);
         newUserInfo.setName(userName);
         newUserInfo.setPhone(userPhone);
