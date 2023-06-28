@@ -1,4 +1,4 @@
-package com.daedrii.bodyapp.view.home;
+package com.daedrii.bodyapp.view.home.body;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,9 @@ import android.widget.Spinner;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.home.HomeController;
+import com.daedrii.bodyapp.controller.sign.SignUpController;
 import com.daedrii.bodyapp.model.user.BodyInfo;
+import com.daedrii.bodyapp.model.user.UserInfo;
 import com.daedrii.bodyapp.view.sign.SignActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
@@ -28,11 +30,15 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class UserFragment extends Fragment {
-    FirebaseUser user;
-    FirebaseAuth mAuth;
-    MaterialTextView presentation;
-    MaterialButton btnLogOut, btnResetData;
-    LinearProgressIndicator progress;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
+    private MaterialTextView presentation;
+    private MaterialButton btnLogOut, btnResetData, btnSaveData;
+    private LinearProgressIndicator progress;
+    private static DecimalFormat decimalFormat3 = new DecimalFormat("#.000");
+    private static DecimalFormat decimalFormat0 = new DecimalFormat("#");
+    private static BodyInfo actualUserBodyInfo;
+    private static UserInfo actualUserInfo;
 
     //Variaveis corporais
     private TextInputEditText weight, height, IMC, IDR;
@@ -42,17 +48,15 @@ public class UserFragment extends Fragment {
     private ArrayList<String> goalForUser;
     private ArrayAdapter<String> goalDropdownAdapter;
 
-    //Variaveis de Genero
-    private Spinner genderSpinner;
-    private ArrayList<String> genderForUser;
-    private ArrayAdapter<String> genderDropdownAdapter;
+    //Variaveis de Dieta
+    private Spinner dietSpinner;
+    private ArrayList<String> dietForUser;
+    private ArrayAdapter<String> dietDropdownMenuAdapter;
 
     //Variáveis de atividade
     private Spinner actLevelSpinner;
     private ArrayList<String> actLevelForUser;
     private ArrayAdapter<String> actLevelDropdownAdapter;
-
-
 
     private void initComponents(View fragmentView){
         //user
@@ -68,6 +72,7 @@ public class UserFragment extends Fragment {
         //Init Buttons
         btnLogOut = fragmentView.findViewById(R.id.btn_logout);
         btnResetData = fragmentView.findViewById(R.id.btn_reset_data);
+        btnSaveData = fragmentView.findViewById(R.id.btn_save);
 
         //Init GoalSpinner
         goalSpinner = fragmentView.findViewById(R.id.goalDropdownMenu);
@@ -81,15 +86,16 @@ public class UserFragment extends Fragment {
         goalSpinner.setAdapter(goalDropdownAdapter);
 
         //Init GenderSpinner
-        genderSpinner = fragmentView.findViewById(R.id.genderDropdownMenu);
-        genderForUser = new ArrayList<>();
+        dietSpinner = fragmentView.findViewById(R.id.dietDropdownMenu);
+        dietForUser = new ArrayList<>();
 
-        genderForUser.add(BodyInfo.Sex.MASCULINO.name());
-        genderForUser.add(BodyInfo.Sex.FEMININO.name());
+        dietForUser.add(BodyInfo.DietType.LowCarb.name());
+        dietForUser.add(BodyInfo.DietType.MidCarb.name());
+        dietForUser.add(BodyInfo.DietType.HighCarb.name());
 
-        genderDropdownAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, genderForUser);
-        genderDropdownAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        genderSpinner.setAdapter(genderDropdownAdapter);
+        dietDropdownMenuAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, dietForUser);
+        dietDropdownMenuAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dietSpinner.setAdapter(dietDropdownMenuAdapter);
 
         //Init ActivityLevelSpinner
         actLevelSpinner = fragmentView.findViewById(R.id.actLevelDropdownMenu);
@@ -119,25 +125,26 @@ public class UserFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        setUserDataOnComponents();
 
     }
 
     private void setUserDataOnComponents(){
         HomeController.getUserData(userInfo -> {
+            actualUserBodyInfo = userInfo.getBodyInfo();
+            actualUserInfo = userInfo;
+
             progress.setVisibility(View.GONE);
-            DecimalFormat decimalFormat = new DecimalFormat("#");
 
             this.presentation.setText(userInfo.getName() + ", " + userInfo.getBodyInfo().getAge() + " anos" );
 
             this.weight.setText(userInfo.getBodyInfo().getWeight().toString());
             this.height.setText(userInfo.getBodyInfo().getHeight().toString());
-            this.IMC.setText(decimalFormat.format(userInfo.getBodyInfo().getIMC()));
-            this.IDR.setText(decimalFormat.format(userInfo.getBodyInfo().getIDR()));
+            this.IDR.setText(decimalFormat0.format(actualUserBodyInfo.getIDR()));
+            this.IMC.setText(decimalFormat3.format(actualUserBodyInfo.getIMC()));
 
             // Definir valor predefinido com base no que está definido no perfil
             goalSpinner.setSelection(userInfo.getBodyInfo().getGoal().ordinal());
-            genderSpinner.setSelection(userInfo.getBodyInfo().getGender().ordinal());
+            dietSpinner.setSelection(userInfo.getBodyInfo().getDiet().ordinal());
             actLevelSpinner.setSelection(userInfo.getBodyInfo().getActLevel().ordinal());
         });
     }
@@ -149,10 +156,17 @@ public class UserFragment extends Fragment {
         View fragmentView =  inflater.inflate(R.layout.fragment_user, container, false);
 
         initComponents(fragmentView);
+        setUserDataOnComponents();
+
 
         btnResetData.setOnClickListener(v -> {
             setUserDataOnComponents();
         });
+
+        btnSaveData.setOnClickListener(v -> {
+            SignUpController.setUserData(actualUserInfo, getContext());
+        });
+
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,6 +182,17 @@ public class UserFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Atualizar valor predefinido quando um item for selecionado
                 String selectedGoal = goalDropdownAdapter.getItem(position);
+                if(actualUserBodyInfo != null){
+                    if(selectedGoal.equals("Perder Peso")){
+                        actualUserBodyInfo.setGoal(BodyInfo.DietGoal.LOSS);
+                    }else if(selectedGoal.equals("Manter Peso")){
+                        actualUserBodyInfo.setGoal(BodyInfo.DietGoal.KEEP);
+                    }else{
+                        actualUserBodyInfo.setGoal(BodyInfo.DietGoal.GAIN);
+                    }
+                    SignUpController.finalizaCalculosCorporais(actualUserBodyInfo);
+                    IDR.setText(decimalFormat0.format(actualUserBodyInfo.getIDR()));
+                }
             }
 
             @Override
@@ -175,10 +200,13 @@ public class UserFragment extends Fragment {
             }
         });
 
-        genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        dietSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedGender = goalDropdownAdapter.getItem(position);
+                String selectedDiet = dietDropdownMenuAdapter.getItem(position);
+                if(actualUserBodyInfo != null){
+                    actualUserBodyInfo.setDiet(BodyInfo.DietType.valueOf(selectedDiet));
+                }
             }
 
             @Override
@@ -191,6 +219,14 @@ public class UserFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedAct = actLevelDropdownAdapter.getItem(position);
+                //Log.d("Activity Level", BodyInfo.ActLevel.valueOf(selectedAct).toString());
+                if(actualUserBodyInfo != null){
+                    actualUserBodyInfo.setActLevel(BodyInfo.ActLevel.valueOf(selectedAct));
+                    //Log.d("ActualUserBody", actualUserInfo.toString());
+                    SignUpController.finalizaCalculosCorporais(actualUserBodyInfo);
+                    IDR.setText(decimalFormat0.format(actualUserBodyInfo.getIDR()));
+                }
+
             }
 
             @Override

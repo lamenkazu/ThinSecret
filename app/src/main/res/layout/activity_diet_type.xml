@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainBackground"
+    tools:context=".view.sign.signup.DietType">
+
+    <TextView
+        android:id="@+id/diet_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
+        android:text="@string/diet_title"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
+
+    <RadioGroup
+        android:id="@+id/radio_diet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:layout_below="@id/diet_title">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/btn_lowcarb"
+            android:text="@string/lowcarb"
+            style="@style/radio_content" />
+
+        <TextView
+            android:id="@+id/lbl_lowcarb1"
+            android:text="@string/lbl_lowcarb1"
+            android:visibility="gone"
+            style="@style/act_lvl_description"
+            android:layout_marginBottom="15dp" />
+
+        <TextView
+            android:id="@+id/lbl_lowcarb2"
+            android:text="@string/lbl_lowcarb2"
+            android:visibility="gone"
+            style="@style/act_lvl_description" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/btn_midcarb"
+            android:text="@string/midcarb"
+            style="@style/radio_content" />
+
+        <TextView
+            android:id="@+id/lbl_midcarb1"
+            android:text="@string/lbl_midcarb1"
+            android:visibility="gone"
+            style="@style/act_lvl_description"
+            android:layout_marginBottom="15dp" />
+
+        <TextView
+            android:id="@+id/lbl_midcarb2"
+            android:text="@string/lbl_midcarb2"
+            android:visibility="gone"
+            style="@style/act_lvl_description" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/btn_highcarb"
+            android:text="@string/highcarb"
+            style="@style/radio_content" />
+
+        <TextView
+            android:id="@+id/lbl_highcarb1"
+            android:text="@string/lbl_highcarb1"
+            android:visibility="gone"
+            style="@style/act_lvl_description"
+            android:layout_marginBottom="15dp" />
+
+        <TextView
+            android:id="@+id/lbl_highcarb2"
+            android:text="@string/lbl_highcarb2"
+            android:visibility="gone"
+            style="@style/act_lvl_description" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/diet_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/acme"
+        android:text="@string/diet_subtitle"
+        android:textSize="20.1dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#b23"
+        android:layout_below="@id/radio_diet" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/diet_next"
+        style="@style/next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/diet_subtitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+</RelativeLayout>

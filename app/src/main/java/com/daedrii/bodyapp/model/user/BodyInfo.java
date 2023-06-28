@@ -18,6 +18,8 @@ public class BodyInfo {
 
     private ActLevel actLevel;
 
+    private DietType diet;
+
     private Double IMC;
 
     private Double IDR;
@@ -43,6 +45,12 @@ public class BodyInfo {
     }
 
     public BodyInfo() {
+    }
+
+    public enum DietType{
+        LowCarb,
+        MidCarb,
+        HighCarb
     }
 
     public enum ActLevel{
@@ -118,14 +126,6 @@ public class BodyInfo {
         return weight;
     }
 
-//    public String getBirthDate() {
-//        return birthDate;
-//    }
-//
-//    public void setBirthDate(String birthDate) {
-//        this.birthDate = birthDate;
-//    }
-
     public Sex getGender() {
         return gender;
     }
@@ -152,6 +152,14 @@ public class BodyInfo {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    public DietType getDiet() {
+        return diet;
+    }
+
+    public void setDiet(DietType diet) {
+        this.diet = diet;
     }
 
     public static List<DietGoal> getDietGoalValues() {

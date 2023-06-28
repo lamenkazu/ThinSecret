@@ -37,7 +37,7 @@ public class GoalSignUp extends AppCompatActivity {
                 if (!SignUpController.setGoal(radioGroup)){
                     Toast.makeText(GoalSignUp.this, "Nenhum objetivo selecionado", Toast.LENGTH_SHORT).show();
                 }else{
-                    Intent intent = new Intent(GoalSignUp.this, GenderSignUp.class);
+                    Intent intent = new Intent(GoalSignUp.this, DietType.class);
                     startActivity(intent);
                 }
 

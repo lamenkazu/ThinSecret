@@ -4,277 +4,226 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.home.UserFragment"
+    tools:context=".view.home.body.UserFragment"
     android:padding="20dp">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="650dp">
 
-
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card"
-            style="@style/Widget.Material3.CardView.Elevated"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="100dp"
-            android:backgroundTint="@color/design_default_color_on_primary">
-
-
-
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/user_progress_data"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card"
+                style="@style/Widget.Material3.CardView.Elevated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:indeterminate="true"
-                app:trackCornerRadius="100dp"
-                app:indicatorColor="@color/mainPrimary"
-                />
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="100dp"
+                android:backgroundTint="@color/design_default_color_on_primary">
 
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="15dp">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/lbl_presentation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="Nome, tantos anos "
-                android:fontFamily="@font/acme"
-                android:textSize="28dp"/>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/body_calc"
-
-                android:layout_below="@id/lbl_presentation"
-
-                android:padding="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true">
-
-                <com.google.android.material.textfield.TextInputLayout
-
-                    android:id="@+id/user_IMC"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:boxStrokeColor="@color/mainSecond"
-                    android:hint="IMC"
-                    android:layout_marginRight="30dp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/user_imc_txt"
-
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-
-                        android:focusable="false"
-                        android:inputType="none"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_toRightOf="@id/user_weight"
-
-                    android:id="@+id/user_IDR"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:boxStrokeColor="@color/mainSecond"
-                    android:hint="IDR"
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/user_idr_txt"
-
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-
-                        android:focusable="false"
-                        android:inputType="none"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/body_layout"
-                android:layout_below="@id/body_calc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true">
-
-                <com.google.android.material.textfield.TextInputLayout
-
-                    android:id="@+id/user_weight"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:boxStrokeColor="@color/mainSecond"
-                    android:hint="Peso"
-                    android:layout_marginRight="30dp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/user_weight_txt"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_toRightOf="@id/user_weight"
-
-                    android:id="@+id/user_height"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:boxStrokeColor="@color/mainSecond"
-                    android:hint="Altura"
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/user_height_txt"
-
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/spinnerLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/body_layout"
-                android:orientation="vertical"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                >
-
-                <Spinner
-                    android:id="@+id/goalDropdownMenu"
-                    android:layout_below="@id/body_layout"
-                    android:layout_width="200dp"
-                    android:layout_height="50dp"
-
-                    android:background="@null"
-                    android:autofillHints="uai"
-
-                    />
-
-                <Spinner
-                    android:layout_below="@id/goalDropdownMenu"
-                    android:id="@+id/genderDropdownMenu"
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/user_progress_data"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@null"
-                    android:autofillHints="uai"
-                    />
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    app:trackCornerRadius="100dp"
+                    app:indicatorColor="@color/mainPrimary" />
 
-                <Spinner
-                    android:layout_below="@id/genderDropdownMenu"
-                    android:id="@+id/actLevelDropdownMenu"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@null"
-                    android:autofillHints="uai"
-                    />
+                    android:layout_height="match_parent"
+                    android:padding="15dp">
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/lbl_presentation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/acme"
+                        android:textSize="28dp" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/body_calc"
+                        android:layout_below="@id/lbl_presentation"
+                        android:padding="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/user_IMC"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:boxStrokeColor="@color/mainSecond"
+                            android:hint="@string/imc_hint"
+                            android:layout_marginRight="30dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/user_imc_txt"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:inputType="numberDecimal" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_toRightOf="@id/user_weight"
+                            android:id="@+id/user_IDR"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:boxStrokeColor="@color/mainSecond"
+                            android:hint="@string/idr_hint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/user_idr_txt"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:inputType="none" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/body_layout"
+                        android:layout_below="@id/body_calc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/user_weight"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:boxStrokeColor="@color/mainSecond"
+                            android:hint="@string/weight_hint"
+                            android:layout_marginRight="30dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/user_weight_txt"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_toRightOf="@id/user_weight"
+                            android:id="@+id/user_height"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:boxStrokeColor="@color/mainSecond"
+                            android:hint="@string/height_hint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/user_height_txt"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/spinnerLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/body_layout"
+                        android:orientation="vertical"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp">
+
+                        <Spinner
+                            android:id="@+id/goalDropdownMenu"
+                            android:layout_below="@id/body_layout"
+                            android:layout_width="200dp"
+                            android:layout_height="50dp"
+                            android:background="@null"
+                            android:autofillHints="uai" />
+
+                        <Spinner
+                            android:layout_below="@id/goalDropdownMenu"
+                            android:id="@+id/dietDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@null"
+                            android:autofillHints="uai" />
+
+                        <Spinner
+                            android:layout_below="@id/dietDropdownMenu"
+                            android:id="@+id/actLevelDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@null"
+                            android:autofillHints="uai" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_reset_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/spinnerLayout"
-                android:backgroundTint="@color/mainAccent"
-                app:cornerRadius="8dp"
-                android:text="Redefinir"
-                android:textColor="@color/mainText"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_alignParentRight="true"
-
-                />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_reset_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/spinnerLayout"
+                        android:backgroundTint="@color/mainAccent"
+                        app:cornerRadius="8dp"
+                        android:text="@string/reset_button_text"
+                        android:textColor="@color/mainText"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_alignParentRight="true" />
 
 
-        </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <RelativeLayout
-            android:id="@+id/btn_layout"
-            android:layout_below="@id/card"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@id/card"
-            android:layout_alignEnd="@id/card">
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:backgroundTint="#556B2F"
-                android:text="Salvar"
-                android:textSize="21sp"
-                android:textStyle="bold"
-                android:textColor="@color/mainBackground"
-                android:fontFamily="@font/acme"
-
-                app:cornerRadius="8dp"
-
-
-                android:layout_alignParentLeft="true"
-
-                />
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_logout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:backgroundTint="#b23"
-                android:text="LogOut"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/mainBackground"
-                android:fontFamily="@font/acme"
-
-                app:cornerRadius="8dp"
-
+            <RelativeLayout
+                android:id="@+id/btn_layout"
+                android:layout_below="@id/card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
+                android:layout_alignStart="@id/card"
+                android:layout_alignEnd="@id/card">
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#556B2F"
+                    android:text="@string/save_button_text"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/mainBackground"
+                    android:fontFamily="@font/acme"
+                    app:cornerRadius="8dp"
+                    android:layout_alignParentLeft="true" />
 
-                />
-        </RelativeLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#b23"
+                    android:text="@string/logout_button_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/mainBackground"
+                    android:fontFamily="@font/acme"
+                    app:cornerRadius="8dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 
     </ScrollView>
-
 
 </RelativeLayout>

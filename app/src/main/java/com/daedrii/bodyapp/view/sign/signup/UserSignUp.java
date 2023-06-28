@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.sign.SignUpController;
+import com.daedrii.bodyapp.view.home.HomeActivity;
 import com.daedrii.bodyapp.view.sign.SignInActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -67,9 +68,14 @@ public class UserSignUp extends AppCompatActivity {
                                                               progressIndicator,
                                                               getApplicationContext());
 
-                        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
-                        startActivity(intent);
-                        finish();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }, 3000);
 
                         }
                 }

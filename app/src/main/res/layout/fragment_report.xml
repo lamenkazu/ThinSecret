@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.home.report.ReportFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relatory_date_change"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="15dp"
+            app:icon="@drawable/baseline_arrow_back_24"
+            app:iconSize="50dp"
+            app:iconTint="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:layout_marginLeft="10dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/relatory_date_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            app:boxCornerRadiusBottomEnd="30dp"
+            app:boxCornerRadiusTopStart="30dp"
+            app:boxStrokeColor="@color/mainPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/btn_forward"
+            app:layout_constraintStart_toEndOf="@+id/btn_back"
+            app:layout_constraintTop_toTopOf="parent"
+            android:focusable="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:gravity="center"
+                app:textInputLayoutFocusedRectEnabled="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_forward"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:icon="@drawable/ic_baseline_arrow_forward_24"
+            app:iconTint="@color/black"
+            app:iconSize="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChart"
+
+        android:layout_below="@id/relatory_date_change"
+
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>

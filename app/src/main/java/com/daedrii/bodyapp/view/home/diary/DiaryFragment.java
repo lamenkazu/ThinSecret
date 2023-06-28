@@ -1,4 +1,4 @@
-package com.daedrii.bodyapp.view.home;
+package com.daedrii.bodyapp.view.home.diary;
 
 import static com.daedrii.bodyapp.model.fatsecret.XmlParser.parseFoodDetails;
 import static com.daedrii.bodyapp.model.fatsecret.XmlParser.parseFoodSearchResults;
@@ -58,15 +58,10 @@ public class DiaryFragment extends Fragment {
 
         //Views de IDR e IR
         irView = view.findViewById(R.id.irView);
+        idrView = view.findViewById(R.id.idrView);
         HomeController.getIRDay(irValue -> {
             IR = irValue; // Atualizar o valor de IR
             irView.setText("IR: " + IR);
-        });
-        DecimalFormat decimalFormat = new DecimalFormat("#");
-        idrView = view.findViewById(R.id.idrView);
-        HomeController.getUserData(userInfo -> {
-            idrView.setText("IDR: " + decimalFormat.format(userInfo.getBodyInfo().getIDR()));
-
         });
 
         //SearchItems Component
@@ -139,8 +134,6 @@ public class DiaryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_diary, container, false);
         initComponents(view);
 
-        searchFoodsAsync("arroz");
-
         return view;
     }
 
@@ -156,6 +149,11 @@ public class DiaryFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        DecimalFormat decimalFormat = new DecimalFormat("#");
+        HomeController.getUserData(userInfo -> {
+            idrView.setText("IDR: " + decimalFormat.format(userInfo.getBodyInfo().getIDR()));
+
+        });
     }
 
     private void searchFoodsAsync(String query) {

@@ -16,6 +16,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.settings.UserSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.sign.signup.DietType"
+            android:exported="false" />
+        <activity
             android:name=".view.sign.SignInActivity"
             android:exported="false" />
         <activity
@@ -29,7 +35,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.home.HomeScreen"
+            android:name=".view.home.HomeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -24,7 +24,6 @@
                 android:id="@+id/lbl_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FoodName"
                 android:textSize="18sp"
                 android:fontFamily="@font/aclonica"
                 android:textColor="@color/black"
@@ -43,7 +42,6 @@
                 android:layout_marginTop="5dp"
                 android:textColor="@color/mainText"
                 android:textSize="12sp"
-                android:text="blablablablablablablablablablablablablablablablablablablablabla"
                 />
 
         </RelativeLayout>

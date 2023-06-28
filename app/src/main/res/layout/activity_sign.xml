@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.sign.SignActivity"
-    android:background="@color/mainBackground"
-    >
+    android:background="@color/mainBackground">
 
     <ImageView
         android:id="@+id/sign_logo"
@@ -14,10 +13,7 @@
         android:layout_height="130dp"
         android:src="@drawable/logo"
         android:layout_centerHorizontal="true"
-
-        android:transitionName="logo_image"
-
-        />
+        android:transitionName="logo_image" />
 
     <RelativeLayout
         android:id="@+id/titleLayout"
@@ -31,33 +27,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-
             android:transitionName="title"
-
             android:fontFamily="@font/aclonica"
             android:text="@string/title"
             android:textColor="@color/mainPrimary"
-            android:textSize="30dp"
-
-            />
+            android:textSize="30dp" />
 
         <TextView
             android:id="@+id/title2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_below="@id/title"
-
             android:layout_centerHorizontal="true"
             android:layout_marginTop="-29.5dp"
             android:fontFamily="@font/aclonica"
             android:text="@string/title2"
-
             android:textColor="@color/mainSecond"
-
             android:textSize="50dp"
             android:transitionName="title2" />
-
 
     </RelativeLayout>
 
@@ -67,24 +54,19 @@
         android:orientation="vertical"
         android:layout_below="@id/titleLayout"
         android:layout_centerInParent="true"
-        android:layout_marginTop="100sp"
+        android:layout_marginTop="100sp">
 
-        >
         <com.google.android.material.button.MaterialButton
             android:id="@+id/newUserButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
-
-            android:text="Sou um novo usuario"
+            android:text="@string/new_user_button"
             android:textSize="20dp"
-
             android:textColor="@color/mainText"
             android:fontFamily="@font/acme"
-            android:backgroundTint="@color/mainPrimary"
-
-            />
+            android:backgroundTint="@color/mainPrimary" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_goto_sign_in"
@@ -93,15 +75,11 @@
             android:layout_below="@id/newUserButton"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-
-            android:text="Ja possuo uma conta"
+            android:text="@string/existing_user_button"
             android:textSize="20dp"
-
             android:textColor="@color/mainText"
             android:fontFamily="@font/acme"
-            android:backgroundTint="@color/mainSecond"
-            />
+            android:backgroundTint="@color/mainSecond" />
     </RelativeLayout>
-
 
 </RelativeLayout>

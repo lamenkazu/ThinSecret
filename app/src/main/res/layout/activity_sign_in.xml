@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.sign.SignInActivity"
-    android:background="@color/mainBackground"
-    >
+    android:background="@color/mainBackground">
 
     <ImageView
         android:id="@+id/sign_logo"
@@ -14,10 +13,7 @@
         android:layout_height="130dp"
         android:src="@drawable/logo"
         android:layout_centerHorizontal="true"
-
-        android:transitionName="logo_image"
-
-        />
+        android:transitionName="logo_image" />
 
     <RelativeLayout
         android:id="@+id/titleLayout"
@@ -31,33 +27,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-
             android:transitionName="title"
-
             android:fontFamily="@font/aclonica"
             android:text="@string/title"
             android:textColor="@color/mainPrimary"
-            android:textSize="30dp"
-
-            />
+            android:textSize="30dp" />
 
         <TextView
             android:id="@+id/title2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_below="@id/title"
-
             android:layout_centerHorizontal="true"
             android:layout_marginTop="-29.5dp"
             android:fontFamily="@font/aclonica"
             android:text="@string/title2"
-
             android:textColor="@color/mainSecond"
-
             android:textSize="50dp"
             android:transitionName="title2" />
-
 
     </RelativeLayout>
 
@@ -68,8 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/titleLayout"
         android:layout_margin="30dp"
-        android:backgroundTint="@color/design_default_color_on_primary"
-        >
+        android:backgroundTint="@color/design_default_color_on_primary">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -81,85 +67,66 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="@string/login_title"
                 android:textSize="32sp"
                 android:textColor="@color/mainText"
                 android:fontFamily="@font/acme"
                 android:textAppearance="?attr/textAppearanceTitleLarge"
-                android:layout_marginLeft="35dp"
-                />
+                android:layout_marginLeft="35dp" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="100sp"
             android:gravity="center">
 
-
             <com.google.android.material.textfield.TextInputLayout
-
                 android:id="@+id/register_name"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="15dp"
-                android:hint="Email"
-
+                android:hint="@string/email_hint"
                 app:boxCornerRadiusBottomEnd="20dp"
                 app:boxCornerRadiusBottomStart="20dp"
                 app:boxCornerRadiusTopEnd="20dp"
                 app:boxCornerRadiusTopStart="20dp"
-
                 app:boxStrokeColor="@color/mainSecond">
 
                 <com.google.android.material.textfield.TextInputEditText
-
                     android:id="@+id/signin_email_txt"
-
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:inputType="textEmailAddress"
-                    android:textAlignment="center"
-
-                    />
+                    android:textAlignment="center" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/sign_password"
-
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/register_name"
                 android:layout_centerHorizontal="true"
-                android:hint="Senha"
-
+                android:hint="@string/password_hint"
                 app:boxCornerRadiusBottomEnd="20dp"
                 app:boxCornerRadiusBottomStart="20dp"
                 app:boxCornerRadiusTopEnd="20dp"
                 app:boxCornerRadiusTopStart="20dp"
-
                 app:boxStrokeColor="@color/mainSecond">
 
                 <com.google.android.material.textfield.TextInputEditText
-
                     android:id="@+id/signin_password_txt"
-
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:inputType="textPassword"
-                    android:textAlignment="center"
-
-                    />
+                    android:textAlignment="center" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,17 +135,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/sign_password"
-
                 app:trackCornerRadius="100dp"
                 android:padding="30dp"
                 app:trackThickness="6dp"
                 app:indicatorColor="@color/mainPrimary"
                 android:indeterminate="true"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
             <com.google.android.material.button.MaterialButton
-
                 android:id="@+id/btn_sign_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -186,16 +150,11 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"
                 android:layout_marginBottom="20dp"
-
                 android:backgroundTint="@color/mainPrimary"
                 android:fontFamily="@font/acme"
-
-                android:text="Entrar"
+                android:text="@string/sign_in_button"
                 android:textColor="@color/mainText"
-                android:textSize="20dp"
-
-                />
-
+                android:textSize="20dp" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>

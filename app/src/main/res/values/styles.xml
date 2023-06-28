@@ -63,9 +63,15 @@
         <item name="android:textSize">50sp</item>
     </style>
 
+    <style name="CustomActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="background">@color/mainPrimary</item>
+    </style>
+
     <style name="Theme.BodyApp.WithActionBar" parent="Theme.BodyApp">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
+        <item name="actionBarStyle">@style/CustomActionBar</item>
+
     </style>
     
 </resources>

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.sign.signup.InitSignUp"
-    android:background="@color/mainBackground">
+    android:background="@color/mainBackground"
+    tools:context=".view.sign.signup.InitSignUp">
 
 
     <TextView
@@ -13,10 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/acme"
-
-        android:text="Qual seu objetivo atual?"
+        android:text="@string/goal_title"
         android:textSize="35dp"
-
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp"
         />
@@ -46,7 +44,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/goal_2"
-
             android:textColor="@color/mainText"
             android:textSize="25dp"
             android:layout_marginTop="15dp"
@@ -58,7 +55,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/goal_3"
-
             android:textColor="@color/mainText"
             android:textSize="25dp"
             />
@@ -67,10 +63,8 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/goal_next"
         style="@style/next_button"
-
         android:layout_below="@id/radio_goal"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"/>
-
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.daedrii.bodyapp.controller.home;
+package com.daedrii.bodyapp.view.home.diary;
 
 import android.view.View;
 

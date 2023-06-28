@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Pair;
@@ -16,9 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daedrii.bodyapp.R;
-import com.daedrii.bodyapp.view.home.HomeScreen;
+import com.daedrii.bodyapp.view.home.HomeActivity;
 import com.daedrii.bodyapp.view.sign.SignActivity;
-import com.daedrii.bodyapp.view.sign.SignInActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -77,7 +75,7 @@ public class Splash extends AppCompatActivity {
                     startActivity(intent, options.toBundle());
                     finish();
                 }else{
-                    Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
                     finish();
                 }

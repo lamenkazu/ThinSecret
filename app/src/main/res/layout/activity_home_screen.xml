@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.home.HomeScreen"
+    tools:context=".view.home.HomeActivity"
     android:background="@color/mainBackground">
 
     <!-- Conteúdo principal -->
@@ -27,17 +27,20 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/baseline_lamen_dining_24" />
+                android:icon="@drawable/baseline_lamen_dining_24"
+                android:contentDescription="@string/tab_item_1" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/baseline_description_30" />
+                android:icon="@drawable/baseline_description_30"
+                android:contentDescription="@string/tab_item_2" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/baseline_tag_faces_24" />
+                android:icon="@drawable/baseline_tag_faces_24"
+                android:contentDescription="@string/tab_item_3" />
 
         </com.google.android.material.tabs.TabLayout>
 

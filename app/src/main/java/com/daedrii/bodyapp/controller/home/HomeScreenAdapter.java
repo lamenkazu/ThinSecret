@@ -6,9 +6,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.daedrii.bodyapp.view.home.DiaryFragment;
-import com.daedrii.bodyapp.view.home.RelatoryFragment;
-import com.daedrii.bodyapp.view.home.UserFragment;
+import com.daedrii.bodyapp.view.home.diary.DiaryFragment;
+import com.daedrii.bodyapp.view.home.report.ReportFragment;
+import com.daedrii.bodyapp.view.home.body.UserFragment;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class HomeScreenAdapter extends FragmentStateAdapter {
     public HomeScreenAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
         fragmentArrayList.add(new DiaryFragment());
-        fragmentArrayList.add(new RelatoryFragment());
+        fragmentArrayList.add(new ReportFragment());
         fragmentArrayList.add(new UserFragment());
 
     }

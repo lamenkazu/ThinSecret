@@ -1,7 +1,6 @@
 package com.daedrii.bodyapp.controller.sign;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -13,8 +12,6 @@ import androidx.core.content.res.ResourcesCompat;
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.model.user.BodyInfo;
 import com.daedrii.bodyapp.model.user.UserInfo;
-import com.daedrii.bodyapp.view.sign.SignInActivity;
-import com.daedrii.bodyapp.view.sign.signup.UserSignUp;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -59,27 +56,14 @@ public class SignUpController {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        progressIndicator.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
 
-                            userRef.child(mAuth.getCurrentUser().getUid())
-                                    .setValue(newUserInfo)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            bodyRef.child(mAuth.getCurrentUser().getUid())
-                                                    .setValue(newBodyInfo)
-                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            Toast.makeText(applicationContext, "Conta criada com Sucesso.",
-                                                                    Toast.LENGTH_SHORT).show();
+                            if(setUserData(newUserInfo, applicationContext)){
+                                Toast.makeText(applicationContext, "Conta criada com Sucesso.",
+                                        Toast.LENGTH_SHORT).show();
 
-                                                            mAuth.signOut();
-                                                        }
-                                                    });
-                                        }
-                                    });
+                                mAuth.signInWithEmailAndPassword(userMail, userPassword);
+                            }
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -89,6 +73,20 @@ public class SignUpController {
                     }
                 });
 
+    }
+
+    public static Boolean setUserData(UserInfo actualUserInfo, Context applicationContext){
+        userRef.child(mAuth.getCurrentUser().getUid())
+                .setValue(actualUserInfo)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        bodyRef.child(mAuth.getCurrentUser().getUid())
+                                .setValue(actualUserInfo.getBodyInfo());
+                    }
+                });
+
+        return true;
     }
 
     public static Boolean handleAgeInfos(Long selection){
@@ -105,32 +103,39 @@ public class SignUpController {
             newBodyInfo.setAge((int) idade);
             newUserInfo.setBirthDate(date);
 
-            finalizaCalculosCorporais();
+            finalizaCalculosCorporais(newBodyInfo);
 
             return true;
         }
     }
 
-    private static void finalizaCalculosCorporais(){
+    public static void finalizaCalculosCorporais(BodyInfo newBodyInfo){
         //Finaliza Calculos Corporais
         BodyInfo bodyInfo = newBodyInfo;
         Double metBasal = bodyInfo.getActLevel().getMetBasal();
         Double step1, step2, step3, somaSteps;
 
-        if(bodyInfo.getGender() == BodyInfo.Sex.MASCULINO){
-            step1 = 13.7 * bodyInfo.getWeight();
-            step2 = 5.0 * bodyInfo.getHeight();
-            step3 = 6.8 * bodyInfo.getAge();
-            somaSteps = 66 + (step1 + step2 - step3);
-            newBodyInfo.setIDR(metBasal * somaSteps);
+        if (bodyInfo.getGender() == BodyInfo.Sex.MASCULINO) {
+            step1 = 13.75 * bodyInfo.getWeight();
+            step2 = 5.003 * bodyInfo.getHeight();
+            step3 = 6.755 * bodyInfo.getAge();
+            somaSteps = 66.5 + step1 + step2 - step3;
 
-        }else if(bodyInfo.getGender() == BodyInfo.Sex.FEMININO){
-            step1 = 9.6 * bodyInfo.getWeight();
-            step2 = 1.8 * bodyInfo.getHeight();
-            step3 = 4.7 * bodyInfo.getAge();
-            somaSteps = 655 + (step1 + step2 - step3);
-            newBodyInfo.setIDR(metBasal * somaSteps);
+        } else {
+            step1 = 9.563 * bodyInfo.getWeight();
+            step2 = 1.85 * bodyInfo.getHeight();
+            step3 = 4.676 * bodyInfo.getAge();
+            somaSteps = 655.1 + step1 + step2 - step3;
         }
+
+        if (bodyInfo.getGoal() == BodyInfo.DietGoal.LOSS) {
+            somaSteps -= 500; // Objetivo de perda de peso
+        } else if (bodyInfo.getGoal() == BodyInfo.DietGoal.GAIN) {
+            somaSteps += 500; // Objetivo de ganho de peso
+        }
+
+        newBodyInfo.setIDR(metBasal * somaSteps);
+
     }
 
     public static Boolean setActLevel(RadioGroup radioGroup){
@@ -190,6 +195,22 @@ public class SignUpController {
         }
     }
 
+    public static Boolean setDiet(RadioGroup radioGroup){
+        int selectedBtnId = radioGroup.getCheckedRadioButtonId();
+
+        if(selectedBtnId == -1)
+            return false;
+        else{
+            if(selectedBtnId == R.id.btn_lowcarb)
+                newBodyInfo.setDiet(BodyInfo.DietType.LowCarb);
+            else if(selectedBtnId == R.id.btn_midcarb)
+                newBodyInfo.setDiet(BodyInfo.DietType.MidCarb);
+            else if(selectedBtnId == R.id.btn_highcarb)
+                newBodyInfo.setDiet(BodyInfo.DietType.HighCarb);
+
+            return true;
+        }
+    }
     public static void handleGenderChance(int checkedId, boolean isChecked,
                                           MaterialButton boyButton, MaterialButton girlButton,
                                           Resources resources, Resources.Theme theme){

@@ -1,25 +1,26 @@
 package com.daedrii.bodyapp.view.home;
 
-import androidx.appcompat.app.ActionBar;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
-import com.daedrii.bodyapp.controller.home.HomeController;
 import com.daedrii.bodyapp.controller.home.HomeScreenAdapter;
-import com.daedrii.bodyapp.view.Splash;
+import com.daedrii.bodyapp.view.settings.UserSettingsActivity;
 import com.daedrii.bodyapp.view.sign.SignActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class HomeScreen extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
     FirebaseUser user;
     FirebaseAuth mAuth;
     private HomeScreenAdapter adapter;
@@ -27,7 +28,7 @@ public class HomeScreen extends AppCompatActivity {
     private ViewPager2 viewPager;
 
     public void goToSignScreen(){
-        Intent intent = new Intent(HomeScreen.this, SignActivity.class);
+        Intent intent = new Intent(HomeActivity.this, SignActivity.class);
         startActivity(intent);
         finish();
     }
@@ -85,5 +86,28 @@ public class HomeScreen extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+
+        // verifica qual é o botão selecionado com base no id
+        switch (id) {
+            case R.id.action_settings:
+                Intent intent = new Intent(HomeActivity.this, UserSettingsActivity.class);
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 }

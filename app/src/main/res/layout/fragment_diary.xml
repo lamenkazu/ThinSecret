@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.home.DiaryFragment">
+    tools:context=".view.home.diary.DiaryFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-
         />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -44,9 +43,8 @@
                 android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="IDR: 00000"
+                android:text="@string/idr_text"
                 android:textSize="27dp"
-
                 />
         </com.google.android.material.card.MaterialCardView>
 
@@ -61,24 +59,17 @@
                 android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="IR: 00000"
-
+                android:text="@string/ir_text"
                 android:textSize="27dp"
-
-
                 />
         </com.google.android.material.card.MaterialCardView>
-
-
     </RelativeLayout>
 
     <ScrollView
         android:id="@+id/scroll_food_list"
         android:layout_below="@id/status_layout"
-
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        >
+        android:layout_height="300dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -86,77 +77,55 @@
             android:backgroundTint="@color/design_default_color_on_primary"
             style="@style/Widget.Material3.CardView.Outlined"
             android:layout_margin="20dp"
-            app:cardCornerRadius="20dp"
-            >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:padding="30dp"
-            >
+            app:cardCornerRadius="20dp">
 
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:padding="30dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_centerHorizontal="true"
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-
-
-
-        </RelativeLayout>
-
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
-
     </ScrollView>
 
     <RelativeLayout
         android:id="@+id/btn_layout"
-
         android:layout_below="@id/scroll_food_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_esvazia_lista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:backgroundTint="#b23"
-            android:text="Esvaziar lista"
+            android:text="@string/esvaziar_lista"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/mainBackground"
             android:fontFamily="@font/acme"
-
             app:cornerRadius="8dp"
-
-            android:layout_centerHorizontal="true"
-
-            />
+            android:layout_centerHorizontal="true"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_enviar_lista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:backgroundTint="@color/mainSecond"
-            android:text="Adicionar Refeição"
+            android:text="@string/adicionar_refeicao"
             android:textSize="32sp"
             android:textStyle="bold"
             android:textColor="@color/mainText"
             android:fontFamily="@font/acme"
-
             app:cornerRadius="8dp"
-
             android:layout_below="@id/btn_esvazia_lista"
             android:layout_centerHorizontal="true"
-
-            android:layout_marginTop="30dp"
-
-            />
+            android:layout_marginTop="30dp"/>
     </RelativeLayout>
-
 </RelativeLayout>

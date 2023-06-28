@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.model.fatsecret.FoodDetails;
 import com.daedrii.bodyapp.model.fatsecret.Serving;
+import com.daedrii.bodyapp.view.home.diary.FoodListViewHolder;
 
 import java.util.ArrayList;
 
@@ -72,14 +73,14 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListViewHolder> {
         }
 
         if(viewList){
-            holder.foodName.setText(foodDetails.getFoodName());
-            holder.foodDescription.setText(servingsText);
+            holder.getFoodName().setText(foodDetails.getFoodName());
+            holder.getFoodDescription().setText(servingsText);
         }
         if(viewSearch){
 
             final int itemPosition = holder.getAdapterPosition();
 
-            holder.searchTitle.setText(foodDetails.getFoodName());
+            holder.getSearchTitle().setText(foodDetails.getFoodName());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

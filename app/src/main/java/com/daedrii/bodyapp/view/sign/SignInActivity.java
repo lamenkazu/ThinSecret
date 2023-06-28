@@ -9,8 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
-import com.daedrii.bodyapp.view.home.HomeScreen;
-import com.daedrii.bodyapp.view.sign.signup.UserSignUp;
+import com.daedrii.bodyapp.view.home.HomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -65,7 +64,7 @@ public class SignInActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(SignInActivity.this, "Bem Vindo!",
                                                 Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(SignInActivity.this, HomeScreen.class);
+                                        Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
                                         startActivity(intent);
                                         finish();
                                     } else {
