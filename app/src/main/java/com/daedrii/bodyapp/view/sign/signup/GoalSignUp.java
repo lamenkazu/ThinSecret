@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.sign.SignUpController;
+import com.daedrii.bodyapp.model.user.BodyInfo;
 import com.google.android.material.button.MaterialButton;
 
 public class GoalSignUp extends AppCompatActivity {
@@ -34,7 +35,17 @@ public class GoalSignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (!SignUpController.setGoal(radioGroup)){
+                int selectedBtnId = radioGroup.getCheckedRadioButtonId();
+
+                if (selectedBtnId == R.id.btn_loss)
+                    SignUpController.setGoal(BodyInfo.DietGoal.LOSS);
+                else if (selectedBtnId == R.id.btn_keep)
+                    SignUpController.setGoal(BodyInfo.DietGoal.KEEP);
+                else if (selectedBtnId == R.id.btn_gain)
+                    SignUpController.setGoal(BodyInfo.DietGoal.GAIN);
+
+
+                if (SignUpController.getNewBodyInfo().getGoal() == null){
                     Toast.makeText(GoalSignUp.this, "Nenhum objetivo selecionado", Toast.LENGTH_SHORT).show();
                 }else{
                     Intent intent = new Intent(GoalSignUp.this, DietType.class);

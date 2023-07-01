@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.sign.SignUpController;
+import com.daedrii.bodyapp.model.user.BodyInfo;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
@@ -54,32 +55,56 @@ public class GenderSignUp extends AppCompatActivity {
         toggleGroup.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
             @Override
             public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-                SignUpController.handleGenderChance(checkedId, isChecked, boyButton, girlButton, getResources(), getTheme());
-            }
-        });
+                BodyInfo.Sex selectedGender = null;
+
+                if (checkedId == R.id.toggle_boy) {
+
+                    if(isChecked){
+                        girlButton.setChecked(false);
+                        boyButton.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.mainPrimary, getTheme()));
+                        selectedGender = BodyInfo.Sex.MASCULINO;
+
+                    }else{
+                        boyButton.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.mainSecond, getTheme()));
+                        SignUpController.getNewBodyInfo().setGender(null);
+
+                    }
 
 
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                } else if (checkedId == R.id.toggle_girl) {
+                    if(isChecked){
+                        boyButton.setChecked(false);
+                        girlButton.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.mainPrimary, getTheme()));
+                        selectedGender = BodyInfo.Sex.FEMININO;
 
-                if(SignUpController.genderNull())
 
-                    Toast.makeText(GenderSignUp.this, "Selecione um genero para prosseguir", Toast.LENGTH_SHORT).show();
-
-                else{
-                    Intent intent = new Intent(GenderSignUp.this, ActLevelSignUp.class);
-                    startActivity(intent);
+                    }else{
+                        girlButton.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.mainSecond, getTheme()));
+                        SignUpController.getNewBodyInfo().setGender(null);
+                    }
+                }
+                if (selectedGender != null) {
+                    SignUpController.handleGenderChange(selectedGender);
                 }
 
+            }
 
+        });
+
+
+        next.setOnClickListener(v -> {
+            if(SignUpController.getNewBodyInfo().getGender() == null)
+
+                Toast.makeText(GenderSignUp.this, "Selecione um genero para prosseguir", Toast.LENGTH_SHORT).show();
+
+            else {
+                Intent intent = new Intent(GenderSignUp.this, ActLevelSignUp.class);
+                startActivity(intent);
             }
         });
 
+
     }
-
-
-
 }
 
 

@@ -43,7 +43,13 @@ public class BodySignUp extends AppCompatActivity {
                     Toast.makeText(BodySignUp.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 else{
 
-                    SignUpController.setBodyData(heightS, weightS);
+                    Double heighInM = Double.parseDouble(heightS) / 100;
+                    Integer givenHeight = Integer.parseInt(heightS);
+                    Integer givenWeight = Integer.parseInt(weightS);
+
+                    Double generatedIMC = (givenWeight) / (heighInM * heighInM);
+
+                    SignUpController.setBodyData(givenHeight, givenWeight, generatedIMC);
 
                     Intent intent = new Intent(BodySignUp.this, AgeSignUp.class);
                     startActivity(intent);

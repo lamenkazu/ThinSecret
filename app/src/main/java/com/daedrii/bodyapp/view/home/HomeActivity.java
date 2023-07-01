@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
+import com.daedrii.bodyapp.controller.home.HomeController;
 import com.daedrii.bodyapp.controller.home.HomeScreenAdapter;
 import com.daedrii.bodyapp.view.settings.UserSettingsActivity;
 import com.daedrii.bodyapp.view.sign.SignActivity;
@@ -36,7 +37,10 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(user == null){
+        HomeController.initFirebase();
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        if (user == null) {
             goToSignScreen();
         }
     }
@@ -46,10 +50,6 @@ public class HomeActivity extends AppCompatActivity {
         setTheme(R.style.Theme_BodyApp_WithActionBar); // Aplica o novo tema
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-
 
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);

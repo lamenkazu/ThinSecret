@@ -1,5 +1,7 @@
 package com.daedrii.bodyapp.controller.home;
 
+import android.service.autofill.UserData;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -23,7 +25,6 @@ public class HomeScreenAdapter extends FragmentStateAdapter {
         fragmentArrayList.add(new UserFragment());
 
     }
-
 
     @NonNull
     @Override

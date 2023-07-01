@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.sign.SignUpController;
+import com.daedrii.bodyapp.model.user.BodyInfo;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -63,7 +64,17 @@ public class DietType extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (!SignUpController.setDiet(radioGroup)){
+                int selectedBtnId = radioGroup.getCheckedRadioButtonId();
+
+                if (selectedBtnId == R.id.btn_lowcarb)
+                    SignUpController.setDiet(BodyInfo.DietType.LowCarb);
+                else if (selectedBtnId == R.id.btn_midcarb)
+                    SignUpController.setDiet(BodyInfo.DietType.MidCarb);
+                else if (selectedBtnId == R.id.btn_highcarb)
+                    SignUpController.setDiet(BodyInfo.DietType.HighCarb);
+
+
+                if (SignUpController.getNewBodyInfo().getDiet() == null){
                     Toast.makeText(DietType.this, "Nenhuma dieta selecionada", Toast.LENGTH_SHORT).show();
                 }else{
                     Intent intent = new Intent(DietType.this, GenderSignUp.class);

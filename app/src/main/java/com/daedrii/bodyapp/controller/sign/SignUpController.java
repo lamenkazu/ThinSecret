@@ -1,35 +1,19 @@
 package com.daedrii.bodyapp.controller.sign;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.view.View;
-import android.widget.RadioGroup;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 
-import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.model.user.BodyInfo;
 import com.daedrii.bodyapp.model.user.UserInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+import java.util.function.Consumer;
 
 public class SignUpController {
-
     private static FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static DatabaseReference userRef = database.getReference("UserInfo");
     private static DatabaseReference bodyRef = database.getReference("BodyInfo");
@@ -37,45 +21,42 @@ public class SignUpController {
     public static BodyInfo newBodyInfo = new BodyInfo();
     public static UserInfo newUserInfo = new UserInfo();
 
-    private static final String USER_PREF_ID = "UserPref";
-
-
-
+    
+    /*
+    * Método que lida com gerar a autenticação do novo usuário
+    * criado durante o SignUp no FirebaseAuth */
     public static void handleUserDataSignUp(String userName, String userPhone,
-                                            String userMail, String userPassword,
-                                            LinearProgressIndicator progressIndicator,
-                                            Context applicationContext){
+                                            String userMail, String userPassword, Consumer<Boolean> callback) {
+
         newUserInfo.setEmail(userMail);
         newUserInfo.setName(userName);
         newUserInfo.setPhone(userPhone);
         newUserInfo.setBodyInfo(newBodyInfo);
 
-
-        mAuth.createUserWithEmailAndPassword(userMail, userPassword)
+        mAuth.createUserWithEmailAndPassword(userMail, userPassword) //cria autenticação para o usuario.
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()) {
 
-                            if(setUserData(newUserInfo, applicationContext)){
-                                Toast.makeText(applicationContext, "Conta criada com Sucesso.",
-                                        Toast.LENGTH_SHORT).show();
-
-                                mAuth.signInWithEmailAndPassword(userMail, userPassword);
+                            
+                            if (setUserData(newUserInfo)) {//Chama método que insere os dados do usuário no banco de dados
+                                
+                                callback.accept(true);
                             }
 
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(applicationContext, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            callback.accept(false);
                         }
                     }
                 });
-
     }
 
-    public static Boolean setUserData(UserInfo actualUserInfo, Context applicationContext){
+    /*
+     * Método que lida com Inserir os dados do usuário inseridos
+     * durante o SignUp no banco de dados Firebase */
+    public static Boolean setUserData(UserInfo actualUserInfo) {
         userRef.child(mAuth.getCurrentUser().getUid())
                 .setValue(actualUserInfo)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -89,27 +70,46 @@ public class SignUpController {
         return true;
     }
 
-    public static Boolean handleAgeInfos(Long selection){
-        LocalDate currentDate = LocalDate.now();
-        LocalDate birthDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(selection), ZoneId.systemDefault()).toLocalDate();
+    
+    /*
+    * Método que lida com deletar os dados e a autenticação de 
+    * um usuário do sistema permanentemente. */
+    public static void deleteUserData(String userId, Consumer<Boolean> callback) {
 
-        String date = birthDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        mAuth.getCurrentUser().delete() //Deleta a autenticação do usuário.
 
-        long idade = ChronoUnit.YEARS.between(birthDate, currentDate);
+                //Ao deletar a autenticação, remove os dados das Coleções UserInfo e BodyInfo
+                // utilizando a UUID do usuário que acabou de ser removido do sistema
+                .addOnCompleteListener(taskAuth -> {
+                            if (taskAuth.isSuccessful()) {
+                                userRef.child(userId).removeValue() // Excluir os dados do UserInfo do Realtime Database
 
-        if (idade < 14) {
-            return false;
-        } else {
-            newBodyInfo.setAge((int) idade);
-            newUserInfo.setBirthDate(date);
+                                        //Ao excluir os dados de UserInfo do Realtime Database,
+                                        //remove os dados corporais de BodyInfo
+                                        .addOnCompleteListener(taskUserInfo -> {
+                                                    if(taskUserInfo.isSuccessful()){
+                                                        bodyRef.child(userId).removeValue()
 
-            finalizaCalculosCorporais(newBodyInfo);
+                                                                //Ao excluir todos os dados, retorna true para
+                                                                // caso tenha excluído com sucesso recursivamente.
+                                                                .addOnCompleteListener(taskBodyInfo -> {
+                                                                            callback.accept(taskBodyInfo.isSuccessful());
+                                                                        }
+                                                                );
+                                                    }
 
-            return true;
-        }
+                                                }
+                                        );
+                            } else {
+                                callback.accept(false);
+                            }
+                        }
+                );
     }
 
-    public static void finalizaCalculosCorporais(BodyInfo newBodyInfo){
+    /*
+    * Método que lida com o calculo do IDR */
+    public static void handleIDRCalculation(BodyInfo newBodyInfo) {
         //Finaliza Calculos Corporais
         BodyInfo bodyInfo = newBodyInfo;
         Double metBasal = bodyInfo.getActLevel().getMetBasal();
@@ -130,6 +130,7 @@ public class SignUpController {
 
         if (bodyInfo.getGoal() == BodyInfo.DietGoal.LOSS) {
             somaSteps -= 500; // Objetivo de perda de peso
+            
         } else if (bodyInfo.getGoal() == BodyInfo.DietGoal.GAIN) {
             somaSteps += 500; // Objetivo de ganho de peso
         }
@@ -138,113 +139,42 @@ public class SignUpController {
 
     }
 
-    public static Boolean setActLevel(RadioGroup radioGroup){
-
-        int selectedBtnId = radioGroup.getCheckedRadioButtonId();
-
-        if(selectedBtnId == -1)
-            return false;
-        else{
-            if(selectedBtnId == R.id.btn_sedentary)
-                newBodyInfo.setActLevel(BodyInfo.ActLevel.SEDENTARY);
-
-            else if(selectedBtnId == R.id.btn_low)
-                newBodyInfo.setActLevel(BodyInfo.ActLevel.LOW_ACTIVE);
-
-            else if(selectedBtnId == R.id.btn_medium)
-                newBodyInfo.setActLevel(BodyInfo.ActLevel.ACTIVE);
-
-            else if(selectedBtnId == R.id.btn_high)
-                newBodyInfo.setActLevel(BodyInfo.ActLevel.HIGH_ACTIVE);
-
-            else if(selectedBtnId == R.id.btn_extreme)
-                newBodyInfo.setActLevel(BodyInfo.ActLevel.EXTREME_ACTIVE);
-
-            return true;
-        }
+    public static void handleAgeInfos(Long idade, String date) {
+        newBodyInfo.setAge(idade.intValue());
+        newUserInfo.setBirthDate(date);
+        handleIDRCalculation(newBodyInfo);
     }
 
-
-    public static void setBodyData(String height, String weight){
-
-        Double heighInM = Double.parseDouble(height) / 100;
-        Integer givenHeight = Integer.parseInt(height);
-        Integer givenWeight = Integer.parseInt(weight);
-
-        Double IMC = (givenWeight) / (heighInM * heighInM);
-
-        newBodyInfo.setHeight(givenHeight);
-        newBodyInfo.setWeight(givenWeight);
+    public static void setActLevel(BodyInfo.ActLevel level){
+        newBodyInfo.setActLevel(level);
+    }
+   public static void setBodyData(Integer height, Integer weight, Double IMC){
         newBodyInfo.setIMC(IMC);
+        newBodyInfo.setHeight(height);
+        newBodyInfo.setWeight(weight);
     }
 
-    public static Boolean setGoal(RadioGroup radioGroup){
-        int selectedBtnId = radioGroup.getCheckedRadioButtonId();
-
-        if(selectedBtnId == -1)
-            return false;
-        else{
-            if(selectedBtnId == R.id.btn_loss)
-                newBodyInfo.setGoal(BodyInfo.DietGoal.LOSS);
-            else if(selectedBtnId == R.id.btn_keep)
-                newBodyInfo.setGoal(BodyInfo.DietGoal.KEEP);
-            else if(selectedBtnId == R.id.btn_gain)
-                newBodyInfo.setGoal(BodyInfo.DietGoal.GAIN);
-
-            return true;
-        }
+    public static void setGoal(BodyInfo.DietGoal goal){
+        newBodyInfo.setGoal(goal);
     }
 
-    public static Boolean setDiet(RadioGroup radioGroup){
-        int selectedBtnId = radioGroup.getCheckedRadioButtonId();
-
-        if(selectedBtnId == -1)
-            return false;
-        else{
-            if(selectedBtnId == R.id.btn_lowcarb)
-                newBodyInfo.setDiet(BodyInfo.DietType.LowCarb);
-            else if(selectedBtnId == R.id.btn_midcarb)
-                newBodyInfo.setDiet(BodyInfo.DietType.MidCarb);
-            else if(selectedBtnId == R.id.btn_highcarb)
-                newBodyInfo.setDiet(BodyInfo.DietType.HighCarb);
-
-            return true;
-        }
-    }
-    public static void handleGenderChance(int checkedId, boolean isChecked,
-                                          MaterialButton boyButton, MaterialButton girlButton,
-                                          Resources resources, Resources.Theme theme){
-        if (checkedId == R.id.toggle_boy) {
-            if(isChecked){
-                girlButton.setChecked(false);
-                boyButton.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.mainPrimary, theme));
-
-                SignUpController.newBodyInfo.setSex(BodyInfo.Sex.MASCULINO);
-
-            }else{
-                boyButton.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.mainSecond, theme));
-                SignUpController.newBodyInfo.setSex(BodyInfo.Sex.NULO);
-            }
-
-        } else if (checkedId == R.id.toggle_girl) {
-            if(isChecked){
-                boyButton.setChecked(false);
-                girlButton.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.mainPrimary, theme));
-
-                SignUpController.newBodyInfo.setSex(BodyInfo.Sex.FEMININO);
-
-            }else{
-                girlButton.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.mainSecond, theme));
-                SignUpController.newBodyInfo.setSex(BodyInfo.Sex.NULO);
-            }
-
-        }
+    public static void setDiet(BodyInfo.DietType diet){
+        newBodyInfo.setDiet(diet);
     }
 
-    public static Boolean genderNull(){
-        return newBodyInfo.getGender() == BodyInfo.Sex.NULO;
+    public static void handleGenderChange(BodyInfo.Sex gender) {
+        newBodyInfo.setSex(gender);
     }
 
+    public static BodyInfo getNewBodyInfo() {
+        return newBodyInfo;
+    }
 
+    public static UserInfo getNewUserInfo() {
+        return newUserInfo;
+    }
 
+    public static void setNewBodyInfo(BodyInfo newBodyInfo) {
+        SignUpController.newBodyInfo = newBodyInfo;
+    }
 }

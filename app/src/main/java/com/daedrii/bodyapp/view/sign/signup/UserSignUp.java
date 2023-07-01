@@ -61,23 +61,24 @@ public class UserSignUp extends AppCompatActivity {
                     Toast.makeText(UserSignUp.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 else{
 
-                    if(userPassword.equals(userPasswordConfirm)){
+                    if (userPassword.equals(userPasswordConfirm)) {
 
-                        SignUpController.handleUserDataSignUp(userName, userPhone,
-                                                              userMail, userPassword,
-                                                              progressIndicator,
-                                                              getApplicationContext());
 
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        SignUpController.handleUserDataSignUp(userName, userPhone, userMail, userPassword, success -> {
+                            if (success) {
+                                FirebaseAuth.getInstance().signInWithEmailAndPassword(userMail, userPassword); //Se criou a conta, loga instantaneamente sem precisar de refazer o login.
+                                Intent intent = new Intent(UserSignUp.this, HomeActivity.class);
                                 startActivity(intent);
                                 finish();
+                            } else {
+                                Toast.makeText(UserSignUp.this, "Falha ao criar a conta", Toast.LENGTH_SHORT).show();
                             }
-                        }, 3000);
+                        });
 
-                        }
+
+                    } else {
+                        Toast.makeText(UserSignUp.this, "As senhas não coincidem", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

@@ -114,13 +114,15 @@ public class DiaryFragment extends Fragment {
         //Botoes
         emptyList = view.findViewById(R.id.btn_esvazia_lista);
         emptyList.setOnClickListener(v -> {
-            HomeController.clearFoodList(foodList, irView, adapterList);
+            HomeController.clearFoodList(foodList, irView);
+            adapterList.notifyDataSetChanged();
         });
 
         addRefToDB = view.findViewById(R.id.btn_enviar_lista);
         addRefToDB.setOnClickListener(v -> {
-            HomeController.addFoodListToDB(foodList, getContext(), IR);
-            HomeController.clearFoodList(foodList, irView, adapterList);
+            HomeController.addFoodListToDB(foodList, IR);
+            HomeController.clearFoodList(foodList, irView);
+            adapterList.notifyDataSetChanged();
 
         });
 

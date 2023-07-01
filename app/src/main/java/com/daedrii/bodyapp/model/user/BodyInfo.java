@@ -45,6 +45,11 @@ public class BodyInfo {
     }
 
     public BodyInfo() {
+        this.diet = null;
+        this.gender = null;
+        this.goal = null;
+        this.actLevel = null;
+        this.age = 0;
     }
 
     public enum DietType{

@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,17 +28,16 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 public class UserFragment extends Fragment {
-    private FirebaseUser user;
-    private FirebaseAuth mAuth;
     private MaterialTextView presentation;
     private MaterialButton btnLogOut, btnResetData, btnSaveData;
     private LinearProgressIndicator progress;
     private static DecimalFormat decimalFormat3 = new DecimalFormat("#.000");
     private static DecimalFormat decimalFormat0 = new DecimalFormat("#");
-    private static BodyInfo actualUserBodyInfo;
-    private static UserInfo actualUserInfo;
+    private BodyInfo actualUserBodyInfo;
+    private UserInfo actualUserInfo;
 
     //Variaveis corporais
     private TextInputEditText weight, height, IMC, IDR;
@@ -59,9 +58,6 @@ public class UserFragment extends Fragment {
     private ArrayAdapter<String> actLevelDropdownAdapter;
 
     private void initComponents(View fragmentView){
-        //user
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
 
         //Progress Data Indicator
         progress = fragmentView.findViewById(R.id.user_progress_data);
@@ -118,6 +114,9 @@ public class UserFragment extends Fragment {
         this.IMC = fragmentView.findViewById(R.id.user_imc_txt);
         this.IDR = fragmentView.findViewById(R.id.user_idr_txt);
 
+        setUserDataOnComponents();
+
+
     }
 
 
@@ -125,7 +124,7 @@ public class UserFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-
+        setUserDataOnComponents();
     }
 
     private void setUserDataOnComponents(){
@@ -156,24 +155,23 @@ public class UserFragment extends Fragment {
         View fragmentView =  inflater.inflate(R.layout.fragment_user, container, false);
 
         initComponents(fragmentView);
-        setUserDataOnComponents();
-
 
         btnResetData.setOnClickListener(v -> {
             setUserDataOnComponents();
         });
 
         btnSaveData.setOnClickListener(v -> {
-            SignUpController.setUserData(actualUserInfo, getContext());
+            SignUpController.setUserData(actualUserInfo);
         });
 
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuth.signOut();
+                FirebaseAuth.getInstance().signOut();
+
                 Intent intent = new Intent(fragmentView.getContext(), SignActivity.class);
                 startActivity(intent);
-                getActivity().finish();
+
             }
         });
 
@@ -190,7 +188,7 @@ public class UserFragment extends Fragment {
                     }else{
                         actualUserBodyInfo.setGoal(BodyInfo.DietGoal.GAIN);
                     }
-                    SignUpController.finalizaCalculosCorporais(actualUserBodyInfo);
+                    SignUpController.handleIDRCalculation(actualUserBodyInfo);
                     IDR.setText(decimalFormat0.format(actualUserBodyInfo.getIDR()));
                 }
             }
@@ -223,7 +221,7 @@ public class UserFragment extends Fragment {
                 if(actualUserBodyInfo != null){
                     actualUserBodyInfo.setActLevel(BodyInfo.ActLevel.valueOf(selectedAct));
                     //Log.d("ActualUserBody", actualUserInfo.toString());
-                    SignUpController.finalizaCalculosCorporais(actualUserBodyInfo);
+                    SignUpController.handleIDRCalculation(actualUserBodyInfo);
                     IDR.setText(decimalFormat0.format(actualUserBodyInfo.getIDR()));
                 }
 

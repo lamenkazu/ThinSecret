@@ -1,11 +1,6 @@
 package com.daedrii.bodyapp.controller.home;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PointF;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -13,14 +8,6 @@ import com.daedrii.bodyapp.model.fatsecret.FoodDetails;
 import com.daedrii.bodyapp.model.fatsecret.Serving;
 import com.daedrii.bodyapp.model.user.BodyInfo;
 import com.daedrii.bodyapp.model.user.UserInfo;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IDataSet;
-import com.github.mikephil.charting.renderer.BarChartRenderer;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,21 +25,25 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class HomeController {
-
-    static Integer totalCalories = 0;
-    static Double totalCarbs = 0.0, totalFat = 0.0, totalProtein = 0.0;
-
-
-    private static FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private static FirebaseAuth userInstance = FirebaseAuth.getInstance();
-    private static DatabaseReference userRef = database.getReference("UserInfo").child(userInstance.getUid());
-    private static DatabaseReference userBodyRef = database.getReference("BodyInfo").child(userInstance.getUid());
-    private static DatabaseReference foodListsRef = database.getReference().child("FoodList Per Day").child(userInstance.getUid());
+    private static FirebaseDatabase database;
+    private static FirebaseAuth userInstance ;
+    private static DatabaseReference userRef ;
+    private static DatabaseReference userBodyRef ;
+    private static DatabaseReference foodListsRef ;
     private static String currentDate = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(new Date());
     private static UserInfo userInfo = new UserInfo();
     private static BodyInfo userBodyInfo = new BodyInfo();
 
-    public static void getBarChartData(BarChart barChart, String currentDate){
+    public static void initFirebase(){
+        database = FirebaseDatabase.getInstance();
+        userInstance = FirebaseAuth.getInstance();
+        userRef = database.getReference("UserInfo").child(userInstance.getUid());
+        userBodyRef = database.getReference("BodyInfo").child(userInstance.getUid());
+        foodListsRef = database.getReference().child("FoodList Per Day").child(userInstance.getUid());
+    }
+
+    public static void getBarChartData(String currentDate, Consumer<List<Serving>> callback){
+        List<Serving> servingsOfDay = new ArrayList<>();
 
         DatabaseReference foodListRef = foodListsRef.child(currentDate).child("foodList");
         foodListRef.addListenerForSingleValueEvent(new ValueEventListener() { //Pega todas as listas inseridas em um dia.
@@ -61,17 +51,12 @@ public class HomeController {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
 
-                    totalCalories = 0;
-                    totalCarbs = 0.0;
-                    totalFat = 0.0;
-                    totalProtein = 0.0;
-
                     for(DataSnapshot foodListSnapShot: snapshot.getChildren()){ //Passa lista a lista do dia
 
                         for(DataSnapshot food: foodListSnapShot.getChildren()){ //Pega alimento por alimento de cada lista do dia
 
                             Map<String, Object> foodMap = (Map<String, Object>) food.getValue();
-                            FoodDetails foodDetails = new FoodDetails(
+                            FoodDetails foodDetails = new FoodDetails( //Nao faz nada com esses detalhes
                                     (String) foodMap.get("foodId"),
                                     (String) foodMap.get("foodName"),
                                     (String) foodMap.get("brandName"),
@@ -115,72 +100,12 @@ public class HomeController {
 //                            Log.d("details: ", servings.get(0).toString());
 
                             Serving serving = servings.get(0);
-                            totalCalories += serving.getCalories();
-                            totalFat += serving.getFat();
-                            totalCarbs += serving.getCarbohydrate();
-                            totalProtein += serving.getProtein();
-
+                            servingsOfDay.add(serving);
 
                         }
-
-
                     }
-                    Log.d("FoodDetail", "Carb: " + totalCarbs + "Calories: " + totalCalories + "Fat: " + totalFat + "Protein: " + totalProtein);
-
-                    List<BarEntry> barEntries = new ArrayList<>();
-
-// Adicione os valores das barras empilhadas
-                    barEntries.add(new BarEntry(0f, new float[]{totalCarbs.floatValue(), totalFat.floatValue(), totalProtein.floatValue()}));
-
-                    BarDataSet dataSet = new BarDataSet(barEntries, "Nutrientes");
-
-// Defina as cores para cada valor da barra
-                    int[] colors = new int[]{Color.RED, Color.BLUE, Color.GREEN};
-                    dataSet.setColors(colors);
-
-                    String[] stackLabels = new String[]{"Carboidratos", "Gorduras", "Proteinas"};
-                    dataSet.setStackLabels(stackLabels);
-                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
-
-                    dataSet.setValueFormatter(new ValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value) {
-                            return decimalFormat.format(value); // Formate o valor conforme o formato definido
-                        }
-                    });
-                    dataSet.setValueTextSize(15f);
-
-                    BarData barData = new BarData(dataSet);
-
-                    barData.setValueTextColor(Color.BLACK); // Defina a cor do texto dos valores
-
-                    BarChartRenderer barRenderer = (BarChartRenderer) barChart.getRenderer();
-                    barRenderer.getPaintValues().setTextAlign(Paint.Align.CENTER); // Centralize o texto verticalmente
-
-                    float barWidth = 0.3f; // Ajuste o valor conforme necessário
-                    barData.setBarWidth(barWidth);
-
-                    barChart.setData(barData);
-                    barChart.invalidate();
-
-                }else{
-
-                    List<BarEntry> barEntries = new ArrayList<>();
-
-// Adicione os valores das barras empilhadas
-
-                    BarDataSet dataSet = new BarDataSet(barEntries, "Nutrientes");
-
-
-                    String[] stackLabels = new String[]{"Carboidratos", "Gorduras", "Proteinas"};
-                    dataSet.setStackLabels(stackLabels);
-
-                    BarData barData = new BarData(dataSet);
-
-                    barChart.setData(barData);
-                    barChart.invalidate();
-
                 }
+                callback.accept(servingsOfDay);
             }
 
             @Override
@@ -191,49 +116,30 @@ public class HomeController {
 
     }
 
-    public static void clearFoodList(ArrayList<FoodDetails> foodList, MaterialTextView irView, FoodListAdapter adapterList){
+    public static void clearFoodList(ArrayList<FoodDetails> foodList, MaterialTextView irView ){
         foodList.clear();
         HomeController.getIRDay(irValue -> {
             Integer IR = irValue; // Atualizar o valor de IR
             irView.setText("IR: " + IR);
         });
-        adapterList.notifyDataSetChanged();
     }
 
-    public static void addFoodListToDB(ArrayList<FoodDetails> foodList, Context applicationContext, Integer IR){
+    public static void addFoodListToDB(ArrayList<FoodDetails> foodList, Integer IR){
 
 
         String newFoodListKey = foodListsRef.child(currentDate).push().getKey();
         foodListsRef.child(currentDate)
                 .child("foodList")
                 .child(newFoodListKey)
-                .setValue(foodList)
-                .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()) {
-                        // Envio bem-sucedido
-                        Toast.makeText(applicationContext, "Lista de alimentos enviada com sucesso.",
-                                Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        // Falha no envio
-                        Toast.makeText(applicationContext, "Falha ao enviar lista de alimentos.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-        });
+                .setValue(foodList);
 
         foodListsRef.child(currentDate)
                 .child("IDR")
                 .setValue(userBodyInfo.getIDR());
-//                .addOnCompleteListener(task -> {
-//
-//                });
 
         foodListsRef.child(currentDate)
                 .child("IR")
                 .setValue(IR);
-//                .addOnCompleteListener(task -> {
-//
-//                });
 
     }
 
@@ -259,13 +165,12 @@ public class HomeController {
         });
     }
 
-
     public static void getUserData(Consumer<UserInfo> callback){
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    // Obtém o mapa de valores do snapshot
+                    //  Constrói a instância de UserInfo
                     Map<String, Object> userDataMap = (Map<String, Object>) dataSnapshot.getValue();
 
                     // Verifica se o mapa é válido
@@ -299,7 +204,7 @@ public class HomeController {
                                     }
                                 }
 
-                                // Chame o método accept() do Consumer com o UserInfo completo
+                                // Retorna o userInfo completo pelo callback
                                 if (callback != null) {
                                     callback.accept(userInfo);
                                 }
@@ -308,7 +213,6 @@ public class HomeController {
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-                                // Trate o cancelamento da leitura de dados
                             }
                         });
                     }
@@ -316,7 +220,6 @@ public class HomeController {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Trate o cancelamento da leitura de dados
             }
         });
 

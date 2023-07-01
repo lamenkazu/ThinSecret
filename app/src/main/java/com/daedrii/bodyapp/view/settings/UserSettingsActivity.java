@@ -88,11 +88,11 @@ public class UserSettingsActivity extends AppCompatActivity {
             boyButton.setChecked(false);
             girlButton.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.mainPrimary, getTheme()));
 
-            SignUpController.newBodyInfo.setSex(BodyInfo.Sex.FEMININO);
+            SignUpController.getNewBodyInfo().setSex(BodyInfo.Sex.FEMININO);
 
         }else{
             girlButton.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.mainSecond, getTheme()));
-            SignUpController.newBodyInfo.setSex(BodyInfo.Sex.NULO);
+            SignUpController.getNewBodyInfo().setSex(BodyInfo.Sex.NULO);
         }
     }
     private void boyToggleSet(boolean isChecked){
@@ -100,11 +100,11 @@ public class UserSettingsActivity extends AppCompatActivity {
             girlButton.setChecked(false);
             boyButton.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.mainPrimary, getTheme()));
 
-            SignUpController.newBodyInfo.setSex(BodyInfo.Sex.MASCULINO);
+            SignUpController.getNewBodyInfo().setSex(BodyInfo.Sex.MASCULINO);
 
         }else{
             boyButton.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.mainSecond, getTheme()));
-            SignUpController.newBodyInfo.setSex(BodyInfo.Sex.NULO);
+            SignUpController.getNewBodyInfo().setSex(BodyInfo.Sex.NULO);
         }
     }
 }
