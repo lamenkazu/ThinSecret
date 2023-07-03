@@ -47,7 +47,7 @@ public class DiaryFragment extends Fragment {
     private SearchView searchView;
     private Handler searchHandler = new Handler();
     private MaterialTextView idrView, irView;
-    private MaterialButton emptyList, addRefToDB;
+    private MaterialButton btnEmptyList, btnAddRefToDB;
 
     private Integer IR = 0;
 
@@ -59,10 +59,7 @@ public class DiaryFragment extends Fragment {
         //Views de IDR e IR
         irView = view.findViewById(R.id.irView);
         idrView = view.findViewById(R.id.idrView);
-        HomeController.getIRDay(irValue -> {
-            IR = irValue; // Atualizar o valor de IR
-            irView.setText("IR: " + IR);
-        });
+        clearFoodList();
 
         //SearchItems Component
         searchResultsRecyclerView = view.findViewById(R.id.recycler_search_result);
@@ -112,20 +109,29 @@ public class DiaryFragment extends Fragment {
         });
 
         //Botoes
-        emptyList = view.findViewById(R.id.btn_esvazia_lista);
-        emptyList.setOnClickListener(v -> {
-            HomeController.clearFoodList(foodList, irView);
-            adapterList.notifyDataSetChanged();
+        btnEmptyList = view.findViewById(R.id.btn_esvazia_lista);
+        btnEmptyList.setOnClickListener(v -> {
+            clearFoodList();
         });
 
-        addRefToDB = view.findViewById(R.id.btn_enviar_lista);
-        addRefToDB.setOnClickListener(v -> {
-            HomeController.addFoodListToDB(foodList, IR);
-            HomeController.clearFoodList(foodList, irView);
-            adapterList.notifyDataSetChanged();
-
+        btnAddRefToDB = view.findViewById(R.id.btn_enviar_lista);
+        btnAddRefToDB.setOnClickListener(v -> {
+            HomeController.addFoodListToDB(foodList, IR, success -> {
+                if(success){
+                    clearFoodList();
+                }
+            });
         });
 
+    }
+
+    private void clearFoodList(){
+        foodList.clear();
+        HomeController.getIRDay(irValue -> {
+            Integer IR = irValue; // Atualizar o valor de IR
+            irView.setText("IR: " + IR);
+            adapterList.notifyDataSetChanged();
+        });
     }
 
     @Override

@@ -1,14 +1,11 @@
 package com.daedrii.bodyapp.controller.home;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.daedrii.bodyapp.model.fatsecret.FoodDetails;
 import com.daedrii.bodyapp.model.fatsecret.Serving;
 import com.daedrii.bodyapp.model.user.BodyInfo;
 import com.daedrii.bodyapp.model.user.UserInfo;
-import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,24 +19,43 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class HomeController {
     private static FirebaseDatabase database;
     private static FirebaseAuth userInstance ;
-    private static DatabaseReference userRef ;
+    private static DatabaseReference userInfoRef;
     private static DatabaseReference userBodyRef ;
     private static DatabaseReference foodListsRef ;
-    private static String currentDate = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(new Date());
-    private static UserInfo userInfo = new UserInfo();
-    private static BodyInfo userBodyInfo = new BodyInfo();
+    private static String currentDate;
+    private static UserInfo userInfo;
+    private static BodyInfo userBodyInfo;
 
-    public static void initFirebase(){
+
+
+    public static void initDatabaseLink(){
         database = FirebaseDatabase.getInstance();
         userInstance = FirebaseAuth.getInstance();
-        userRef = database.getReference("UserInfo").child(userInstance.getUid());
+        userInfoRef = database.getReference("UserInfo").child(Objects.requireNonNull(userInstance.getUid()));
         userBodyRef = database.getReference("BodyInfo").child(userInstance.getUid());
-        foodListsRef = database.getReference().child("FoodList Per Day").child(userInstance.getUid());
+        foodListsRef = database.getReference("FoodList Per Day").child(userInstance.getUid());
+
+        userInfo = new UserInfo();
+        userBodyInfo = new BodyInfo();
+        currentDate = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(new Date());
+    }
+
+    public static void initDatabaseLinkForMock(FirebaseDatabase db, FirebaseAuth auth){
+        database = db;
+        userInstance = auth;
+        userInfoRef = database.getReference("UserInfo").child(userInstance.getUid());
+        userBodyRef = database.getReference("BodyInfo").child(userInstance.getUid());
+        foodListsRef = database.getReference("FoodList Per Day").child(userInstance.getUid());
+
+        userInfo = new UserInfo();
+        userBodyInfo = new BodyInfo();
+        currentDate = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(new Date());
     }
 
     public static void getBarChartData(String currentDate, Consumer<List<Serving>> callback){
@@ -56,7 +72,7 @@ public class HomeController {
                         for(DataSnapshot food: foodListSnapShot.getChildren()){ //Pega alimento por alimento de cada lista do dia
 
                             Map<String, Object> foodMap = (Map<String, Object>) food.getValue();
-                            FoodDetails foodDetails = new FoodDetails( //Nao faz nada com esses detalhes
+                            FoodDetails foodDetails = new FoodDetails( //Nao faz mais nada com esses detalhes
                                     (String) foodMap.get("foodId"),
                                     (String) foodMap.get("foodName"),
                                     (String) foodMap.get("brandName"),
@@ -68,29 +84,30 @@ public class HomeController {
                             List<Map<String, Object>> servingsMapList = (List<Map<String, Object>>) foodMap.get("servings");
                             List<Serving> servings = new ArrayList<>();
 
+                            assert servingsMapList != null;
                             for (Map<String, Object> servingMap : servingsMapList) {
                                 Serving serving = new Serving(
                                         (String) servingMap.get("servingId"),
                                         (String) servingMap.get("servingDescription"),
                                         (String) servingMap.get("servingUrl"),
-                                        ((Number) servingMap.get("metricServingAmount")).doubleValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("metricServingAmount"))).doubleValue(),
                                         (String) servingMap.get("metricServingUnit"),
-                                        ((Number) servingMap.get("numberOfUnits")).doubleValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("numberOfUnits"))).doubleValue(),
                                         (String) servingMap.get("measurementDescription"),
-                                        ((Number) servingMap.get("calories")).intValue(),
-                                        ((Number) servingMap.get("carbohydrate")).doubleValue(),
-                                        ((Number) servingMap.get("protein")).doubleValue(),
-                                        ((Number) servingMap.get("fat")).doubleValue(),
-                                        ((Number) servingMap.get("saturatedFat")).doubleValue(),
-                                        ((Number) servingMap.get("monounsaturatedFat")).doubleValue(),
-                                        ((Number) servingMap.get("transFat")).doubleValue(),
-                                        ((Number) servingMap.get("cholesterol")).intValue(),
-                                        ((Number) servingMap.get("sodium")).intValue(),
-                                        ((Number) servingMap.get("potassium")).intValue(),
-                                        ((Number) servingMap.get("fiber")).doubleValue(),
-                                        ((Number) servingMap.get("sugar")).doubleValue(),
-                                        ((Number) servingMap.get("calcium")).intValue(),
-                                        ((Number) servingMap.get("iron")).intValue()
+                                        ((Number) Objects.requireNonNull(servingMap.get("calories"))).intValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("carbohydrate"))).doubleValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("protein"))).doubleValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("fat"))).doubleValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("saturatedFat"))).doubleValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("monounsaturatedFat"))).doubleValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("transFat"))).doubleValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("cholesterol"))).intValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("sodium"))).intValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("potassium"))).intValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("fiber"))).doubleValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("sugar"))).doubleValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("calcium"))).intValue(),
+                                        ((Number) Objects.requireNonNull(servingMap.get("iron"))).intValue()
                                 );
 
 
@@ -116,31 +133,46 @@ public class HomeController {
 
     }
 
-    public static void clearFoodList(ArrayList<FoodDetails> foodList, MaterialTextView irView ){
-        foodList.clear();
-        HomeController.getIRDay(irValue -> {
-            Integer IR = irValue; // Atualizar o valor de IR
-            irView.setText("IR: " + IR);
-        });
-    }
-
-    public static void addFoodListToDB(ArrayList<FoodDetails> foodList, Integer IR){
-
+    public static void addFoodListToDB(ArrayList<FoodDetails> foodList, Integer IR, Consumer<Boolean> success){
 
         String newFoodListKey = foodListsRef.child(currentDate).push().getKey();
-        foodListsRef.child(currentDate)
-                .child("foodList")
-                .child(newFoodListKey)
-                .setValue(foodList);
+        assert newFoodListKey != null;
 
-        foodListsRef.child(currentDate)
-                .child("IDR")
-                .setValue(userBodyInfo.getIDR());
+        if(!foodList.isEmpty()){
+            if (success != null) {
+                foodListsRef.child(currentDate)
+                        .child("foodList")
+                        .child(newFoodListKey)
+                        .setValue(foodList)
+                        .addOnCompleteListener(foodListTask -> {
+                            if(foodListTask.isSuccessful()){
 
-        foodListsRef.child(currentDate)
-                .child("IR")
-                .setValue(IR);
+                                foodListsRef.child(currentDate)
+                                        .child("IDR")
+                                        .setValue(userBodyInfo.getIDR())
+                                        .addOnCompleteListener(IDROnDayTask -> {
 
+                                            if(IDROnDayTask.isSuccessful()){
+
+                                                foodListsRef.child(currentDate)
+                                                        .child("IR")
+                                                        .setValue(IR)
+                                                        .addOnCompleteListener(IROnDayTask -> {
+
+                                                            success.accept(IROnDayTask.isSuccessful());
+                                                        });
+
+                                            }else success.accept(false);
+
+                                        });
+
+                            }else success.accept(false);
+                        });
+            }
+        }else{
+            //TODO lançar exceção para lista vazia
+            throw new RuntimeException();
+        }
     }
 
     public static void getIRDay(Consumer<Integer> callback){
@@ -166,7 +198,7 @@ public class HomeController {
     }
 
     public static void getUserData(Consumer<UserInfo> callback){
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        userInfoRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -190,14 +222,14 @@ public class HomeController {
                                     Map<String, Object> bodyInfoMap = (Map<String, Object>) bodySnapShot.getValue();
                                     if (bodyInfoMap != null) {
 
-                                        userBodyInfo.setAge(((Long) bodyInfoMap.get("age")).intValue());
-                                        userBodyInfo.setWeight(((Long) bodyInfoMap.get("weight")).intValue());
-                                        userBodyInfo.setHeight(((Long) bodyInfoMap.get("height")).intValue());
+                                        userBodyInfo.setAge(((Long) Objects.requireNonNull(bodyInfoMap.get("age"))).intValue());
+                                        userBodyInfo.setWeight(((Long) Objects.requireNonNull(bodyInfoMap.get("weight"))).intValue());
+                                        userBodyInfo.setHeight(((Long) Objects.requireNonNull(bodyInfoMap.get("height"))).intValue());
                                         userBodyInfo.setGender(BodyInfo.Sex.valueOf((String) bodyInfoMap.get("gender")));
                                         userBodyInfo.setGoal(BodyInfo.DietGoal.valueOf((String) bodyInfoMap.get("goal")));
                                         userBodyInfo.setActLevel(BodyInfo.ActLevel.valueOf((String) bodyInfoMap.get("actLevel")));
-                                        userBodyInfo.setIMC((Double) bodyInfoMap.get("imc"));
-                                        userBodyInfo.setIDR((Double) bodyInfoMap.get("idr"));
+                                        userBodyInfo.setIMC(Double.valueOf(Objects.requireNonNull(bodyInfoMap.get("imc")).toString()));
+                                        userBodyInfo.setIDR(Double.valueOf(Objects.requireNonNull(bodyInfoMap.get("idr")).toString()));
                                         userBodyInfo.setDiet(BodyInfo.DietType.valueOf((String) bodyInfoMap.get("diet")));
 
                                         userInfo.setBodyInfo(userBodyInfo);
@@ -225,4 +257,25 @@ public class HomeController {
 
     }
 
+    public static FirebaseDatabase getDatabase() {
+        return database;
+    }
+
+    public static FirebaseAuth getUserInstance() {
+        return userInstance;
+    }
+
+    public static UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public static BodyInfo getUserBodyInfo() {
+        return userBodyInfo;
+    }
+
+    public static void setDatabase(FirebaseDatabase mockDatabase) {
+    }
+
+    public static void setAuth(FirebaseAuth mockAuth) {
+    }
 }

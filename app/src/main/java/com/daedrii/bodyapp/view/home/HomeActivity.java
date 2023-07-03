@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.home.HomeController;
@@ -37,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        HomeController.initFirebase();
+        HomeController.initDatabaseLink();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         if (user == null) {

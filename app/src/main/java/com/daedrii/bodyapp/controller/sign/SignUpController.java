@@ -177,4 +177,8 @@ public class SignUpController {
     public static void setNewBodyInfo(BodyInfo newBodyInfo) {
         SignUpController.newBodyInfo = newBodyInfo;
     }
+
+    public static void setNewUserInfo(UserInfo newUserInfo) {
+        SignUpController.newUserInfo = newUserInfo;
+    }
 }

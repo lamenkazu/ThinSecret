@@ -35,6 +35,13 @@ public class Serving {
                 '}';
     }
 
+    public Serving(int calories, double carbohydrate, double protein, double fat){
+        this.calories = calories;
+        this.carbohydrate = carbohydrate;
+        this.protein = protein;
+        this.fat = fat;
+    }
+
     public Serving(String servingId, String servingDescription, String servingUrl, double metricServingAmount, String metricServingUnit, double numberOfUnits, String measurementDescription, int calories, double carbohydrate, double protein, double fat, double saturatedFat, double monounsaturatedFat, double transFat, int cholesterol, int sodium, int potassium, double fiber, double sugar, int calcium, int iron) {
         this.servingId = servingId;
         this.servingDescription = servingDescription;

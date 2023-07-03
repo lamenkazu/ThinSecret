@@ -26,11 +26,14 @@ import java.util.function.Consumer;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SignUpControllerInstrumentedTest {
 
-    private UserInfo testUser = new UserInfo();
-    private BodyInfo testeBody = new BodyInfo();
+    private UserInfo testUser;
+    private BodyInfo testeBody;
 
     @Before
     public void setSeedData(){
+
+        testUser = new UserInfo();
+        testeBody = new BodyInfo();
 
         testeBody.setWeight(55);
         testeBody.setActLevel(BodyInfo.ActLevel.ACTIVE);
@@ -55,21 +58,21 @@ public class SignUpControllerInstrumentedTest {
     @Test
     public void Teste1_ShouldHandleUserDataSignUpSuccessfully() {
 
-        // Set up callback listener
+
         AtomicBoolean callbackResult = new AtomicBoolean(false);
         Consumer<Boolean> callback = result -> callbackResult.set(result);
 
-        // Call the method
+
         SignUpController.handleUserDataSignUp(testUser.getName(), testUser.getPhone(), testUser.getEmail(), "123456789", callback);
 
-        // Wait for the asynchronous operation to complete
+
         try {
-            Thread.sleep(5000); // Adjust the sleep duration as needed
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        // Assert the callback result
+
         assertTrue(callbackResult.get());
     }
 
