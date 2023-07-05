@@ -1,6 +1,7 @@
 package com.daedrii.bodyapp.view.sign;
 
-import androidx.annotation.NonNull;
+import static android.widget.Toast.LENGTH_SHORT;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,14 +10,16 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
+import com.daedrii.bodyapp.controller.sign.SignUpController;
+import com.daedrii.bodyapp.model.exceptions.EmptyFieldException;
+import com.daedrii.bodyapp.model.exceptions.InvalidUserException;
 import com.daedrii.bodyapp.view.home.HomeActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -49,36 +52,49 @@ public class SignInActivity extends AppCompatActivity {
                 String userMail = email.getText().toString();
                 String userPassword = password.getText().toString();
 
+                decide(userMail, userPassword);
 
-                if(userMail.equals("") || userPassword.equals(""))
-                    Toast.makeText(SignInActivity.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-                else{
 
-                    mAuth.signInWithEmailAndPassword(userMail, userPassword)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                    progressIndicator.setVisibility(View.GONE);
-
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(SignInActivity.this, "Bem Vindo!",
-                                                Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Toast.makeText(SignInActivity.this, "Authentication failed.",
-                                                Toast.LENGTH_SHORT).show();
-
-                                    }
-                                }
-                            });
-
-                }
             }
         });
 
+    }
+
+    public Boolean decide(String userMail, String userPassword){
+        AtomicReference<Boolean> decision = new AtomicReference<>(false);
+        try {
+            if(userMail.equals("") || userPassword.equals("")){
+                throw new EmptyFieldException(getApplicationContext().getString(R.string.exception_empty_field));
+            }else{
+                SignUpController.handleSignIn(userMail, userPassword, success -> {
+                    progressIndicator.setVisibility(View.GONE);
+
+                    try{
+                        if(success){
+                            Toast.makeText(SignInActivity.this, "Bem Vindo!",
+                                    LENGTH_SHORT).show();
+                            decision.set(true);
+                            Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+
+                        }else{
+                            throw new InvalidUserException(getString(R.string.exception_invalid_user));
+
+                        }
+                    }catch (Exception e){
+                        Toast.makeText(SignInActivity.this, e.getMessage(), LENGTH_SHORT).show();
+                        progressIndicator.setVisibility(View.GONE);
+
+                    }
+
+                });
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(SignInActivity.this, e.getMessage(), LENGTH_SHORT).show();
+            progressIndicator.setVisibility(View.GONE);
+        }
+        return decision.get();
     }
 }

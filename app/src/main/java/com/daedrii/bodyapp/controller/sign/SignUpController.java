@@ -1,9 +1,20 @@
 package com.daedrii.bodyapp.controller.sign;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
+import com.daedrii.bodyapp.R;
+import com.daedrii.bodyapp.model.exceptions.EmptyFieldException;
+import com.daedrii.bodyapp.model.exceptions.InvalidUserException;
 import com.daedrii.bodyapp.model.user.BodyInfo;
 import com.daedrii.bodyapp.model.user.UserInfo;
+import com.daedrii.bodyapp.view.home.HomeActivity;
+import com.daedrii.bodyapp.view.sign.SignInActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,7 +32,31 @@ public class SignUpController {
     public static BodyInfo newBodyInfo = new BodyInfo();
     public static UserInfo newUserInfo = new UserInfo();
 
-    
+
+
+    /*
+    * Método que lida com a autenticação de um usuário ja existente*/
+    public static void handleSignIn(String userMail, String userPassword, Consumer<Boolean> success) {
+
+        mAuth.signInWithEmailAndPassword(userMail, userPassword)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (task.isSuccessful()) {
+                            if(success != null){
+                                success.accept(true);
+                            }
+                        } else {
+
+                            if(success != null){
+                                success.accept(false);
+                            }
+                        }
+                    }
+                });
+
+    }
     /*
     * Método que lida com gerar a autenticação do novo usuário
     * criado durante o SignUp no FirebaseAuth */
@@ -42,12 +77,18 @@ public class SignUpController {
 
                             
                             if (setUserData(newUserInfo)) {//Chama método que insere os dados do usuário no banco de dados
-                                
-                                callback.accept(true);
+
+                                if(callback != null){
+                                    callback.accept(true);
+
+                                }
                             }
 
                         } else {
-                            callback.accept(false);
+                            if(callback != null){
+                                callback.accept(false);
+
+                            }
                         }
                     }
                 });

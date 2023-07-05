@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.sign.SignUpController;
+import com.daedrii.bodyapp.model.exceptions.EmptyFieldException;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -39,24 +40,39 @@ public class BodySignUp extends AppCompatActivity {
                 String heightS = height.getText().toString();
                 String weightS = weight.getText().toString();
 
-                if(heightS.equals("") || weightS.equals(""))
-                    Toast.makeText(BodySignUp.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-                else{
-
-                    Double heighInM = Double.parseDouble(heightS) / 100;
-                    Integer givenHeight = Integer.parseInt(heightS);
-                    Integer givenWeight = Integer.parseInt(weightS);
-
-                    Double generatedIMC = (givenWeight) / (heighInM * heighInM);
-
-                    SignUpController.setBodyData(givenHeight, givenWeight, generatedIMC);
-
-                    Intent intent = new Intent(BodySignUp.this, AgeSignUp.class);
-                    startActivity(intent);
-                }
+                decide(heightS, weightS);
 
 
             }
         });
+    }
+
+    public Boolean decide(String heightS, String weightS){
+
+        Boolean success = false;
+        try{
+            if(heightS.equals("") || weightS.equals(""))
+                throw new EmptyFieldException(getString(R.string.exception_empty_field));
+            else{
+
+                Double heighInM = Double.parseDouble(heightS) / 100;
+                Integer givenHeight = Integer.parseInt(heightS);
+                Integer givenWeight = Integer.parseInt(weightS);
+
+                Double generatedIMC = (givenWeight) / (heighInM * heighInM);
+
+                SignUpController.setBodyData(givenHeight, givenWeight, generatedIMC);
+
+                success = true;
+
+                Intent intent = new Intent(BodySignUp.this, AgeSignUp.class);
+                startActivity(intent);
+            }
+        }catch (EmptyFieldException e){
+            Toast.makeText(BodySignUp.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+
+        return success;
     }
 }

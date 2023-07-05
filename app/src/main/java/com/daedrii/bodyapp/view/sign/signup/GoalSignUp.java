@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.sign.SignUpController;
+import com.daedrii.bodyapp.model.exceptions.EmptyFieldException;
 import com.daedrii.bodyapp.model.user.BodyInfo;
 import com.google.android.material.button.MaterialButton;
 
@@ -29,6 +30,7 @@ public class GoalSignUp extends AppCompatActivity {
         setContentView(R.layout.activity_goal_sign_up);
 
         startComponents();
+        SignUpController.setGoal(null);
 
 
         next.setOnClickListener(new View.OnClickListener() {
@@ -45,16 +47,32 @@ public class GoalSignUp extends AppCompatActivity {
                     SignUpController.setGoal(BodyInfo.DietGoal.GAIN);
 
 
-                if (SignUpController.getNewBodyInfo().getGoal() == null){
-                    Toast.makeText(GoalSignUp.this, "Nenhum objetivo selecionado", Toast.LENGTH_SHORT).show();
-                }else{
-                    Intent intent = new Intent(GoalSignUp.this, DietType.class);
-                    startActivity(intent);
-                }
+                decide();
+
 
 
             }
         });
+    }
+
+    public Boolean decide(){
+
+        Boolean success = false;
+        try{
+            if (SignUpController.getNewBodyInfo().getGoal() == null){
+                throw new EmptyFieldException(getString(R.string.exception_empty_field));
+            }else{
+                success = true;
+                Intent intent = new Intent(GoalSignUp.this, DietTypeSignUp.class);
+                startActivity(intent);
+            }
+
+        }catch(EmptyFieldException e){
+            Toast.makeText(GoalSignUp.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+
+        return success;
     }
 
 }

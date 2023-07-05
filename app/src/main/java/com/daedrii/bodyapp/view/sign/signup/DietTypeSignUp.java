@@ -11,11 +11,11 @@ import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.sign.SignUpController;
+import com.daedrii.bodyapp.model.exceptions.EmptyFieldException;
 import com.daedrii.bodyapp.model.user.BodyInfo;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textview.MaterialTextView;
 
-public class DietType extends AppCompatActivity {
+public class DietTypeSignUp extends AppCompatActivity {
 
     MaterialButton next;
     RadioGroup radioGroup;
@@ -52,6 +52,7 @@ public class DietType extends AppCompatActivity {
         setContentView(R.layout.activity_diet_type);
 
         initComponents();
+        SignUpController.getNewBodyInfo().setDiet(null);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -74,15 +75,30 @@ public class DietType extends AppCompatActivity {
                     SignUpController.setDiet(BodyInfo.DietType.HighCarb);
 
 
-                if (SignUpController.getNewBodyInfo().getDiet() == null){
-                    Toast.makeText(DietType.this, "Nenhuma dieta selecionada", Toast.LENGTH_SHORT).show();
-                }else{
-                    Intent intent = new Intent(DietType.this, GenderSignUp.class);
-                    startActivity(intent);
-                }
+                decide();
 
 
             }
         });
+    }
+
+    public Boolean decide(){
+
+        Boolean success = false;
+
+        try{
+            if (SignUpController.getNewBodyInfo().getDiet() == null){
+                throw new EmptyFieldException(getString(R.string.exception_empty_field));
+            }else{
+                success = true;
+                Intent intent = new Intent(DietTypeSignUp.this, GenderSignUp.class);
+                startActivity(intent);
+            }
+        }catch (EmptyFieldException e){
+            Toast.makeText(DietTypeSignUp.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+
+        return success;
     }
 }

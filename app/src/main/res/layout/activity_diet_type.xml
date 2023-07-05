@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
-    tools:context=".view.sign.signup.DietType">
+    tools:context=".view.sign.signup.DietTypeSignUp">
 
     <TextView
         android:id="@+id/diet_title"

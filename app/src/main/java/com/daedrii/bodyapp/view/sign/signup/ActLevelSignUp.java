@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.sign.SignUpController;
+import com.daedrii.bodyapp.model.exceptions.EmptyFieldException;
 import com.daedrii.bodyapp.model.user.BodyInfo;
 import com.google.android.material.button.MaterialButton;
 
@@ -29,6 +30,7 @@ public class ActLevelSignUp extends AppCompatActivity {
         setContentView(R.layout.activity_level_sign_up);
 
         startComponents();
+        SignUpController.setActLevel(null);
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,14 +54,30 @@ public class ActLevelSignUp extends AppCompatActivity {
                     SignUpController.setActLevel(BodyInfo.ActLevel.EXTREME_ACTIVE);
 
 
-               if(SignUpController.getNewBodyInfo().getActLevel() == null){
-                   Toast.makeText(ActLevelSignUp.this, "Nenhum objetivo selecionado", Toast.LENGTH_SHORT).show();
-               }else{
-                   Intent intent = new Intent(ActLevelSignUp.this, BodySignUp.class);
-                   startActivity(intent);
-               }
+               decide();
 
             }
         });
+    }
+
+    public Boolean decide(){
+
+        Boolean success = false;
+
+        try{
+            if(SignUpController.getNewBodyInfo().getActLevel() == null){
+                throw new EmptyFieldException(getString(R.string.exception_empty_field));
+            }else{
+                success = true;
+                Intent intent = new Intent(ActLevelSignUp.this, BodySignUp.class);
+                startActivity(intent);
+            }
+        }catch (EmptyFieldException e){
+            Toast.makeText(ActLevelSignUp.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+
+
+        return success;
     }
 }

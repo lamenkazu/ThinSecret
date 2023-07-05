@@ -92,4 +92,14 @@
     <string name="imc_hint">IMC</string>
     <string name="idr_hint">IDR</string>
 
+    <string name="age_hint">Idade</string>
+
+
+    <string name="exception_empty_field">Preencha todos os campos!</string>
+    <string name="exception_invalid_user">Falha na Autenticação</string>
+    <string name="exception_option_not_selected">Selecione uma opção!</string>
+    <string name="exception_password_not_matches">As senhas não coincidem!</string>
+    <string name="exception_failed_account_creation">Falha ao criar a conta."</string>
+    <string name="exception_invalid_age">Idade insuficiente para ingressar"</string>
+
 </resources>

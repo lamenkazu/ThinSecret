@@ -1,25 +1,24 @@
 package com.daedrii.bodyapp.view.sign.signup;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
 import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.sign.SignUpController;
+import com.daedrii.bodyapp.model.exceptions.EmptyFieldException;
+import com.daedrii.bodyapp.model.exceptions.FailedAccountCreation;
+import com.daedrii.bodyapp.model.exceptions.PasswordNotMatchesException;
 import com.daedrii.bodyapp.view.home.HomeActivity;
-import com.daedrii.bodyapp.view.sign.SignInActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class UserSignUp extends AppCompatActivity {
 
@@ -57,30 +56,50 @@ public class UserSignUp extends AppCompatActivity {
                 String userPassword = password.getText().toString();
                 String userPasswordConfirm = passwordConfirm.getText().toString();
 
-                if(userPasswordConfirm.equals("") || userMail.equals("") || userPassword.equals("") || userName.equals("") || userPhone.equals(""))
-                    Toast.makeText(UserSignUp.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-                else{
+                decide(userName, userPhone, userMail, userPassword, userPasswordConfirm);
 
-                    if (userPassword.equals(userPasswordConfirm)) {
+            }
+        });
+    }
 
+    public Boolean decide(String userName, String userPhone, String userMail, String userPassword, String userPasswordConfirm){
+
+        AtomicReference<Boolean> decision = new AtomicReference<>(false);
+        try{
+            if(userPasswordConfirm.equals("") || userMail.equals("") || userPassword.equals("") || userName.equals("") || userPhone.equals("")){
+                throw new EmptyFieldException(getString(R.string.exception_empty_field));
+            }
+            else{
+
+                if (userPassword.equals(userPasswordConfirm)) {
 
                         SignUpController.handleUserDataSignUp(userName, userPhone, userMail, userPassword, success -> {
-                            if (success) {
-                                FirebaseAuth.getInstance().signInWithEmailAndPassword(userMail, userPassword); //Se criou a conta, loga instantaneamente sem precisar de refazer o login.
-                                Intent intent = new Intent(UserSignUp.this, HomeActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(UserSignUp.this, "Falha ao criar a conta", Toast.LENGTH_SHORT).show();
+                            try{
+                                if (success) {
+                                    decision.set(true);
+                                    FirebaseAuth.getInstance().signInWithEmailAndPassword(userMail, userPassword); //Se criou a conta, loga instantaneamente sem precisar de refazer o login.
+                                    Intent intent = new Intent(UserSignUp.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    throw new FailedAccountCreation(getString(R.string.exception_failed_account_creation));
+                                }
+                            }catch (Exception e){
+                                Toast.makeText(UserSignUp.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
                             }
                         });
 
-
-                    } else {
-                        Toast.makeText(UserSignUp.this, "As senhas não coincidem", Toast.LENGTH_SHORT).show();
-                    }
+                } else {
+                    throw new PasswordNotMatchesException(getString(R.string.exception_password_not_matches));
                 }
             }
-        });
+        }catch (Exception e){
+            Toast.makeText(UserSignUp.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            progressIndicator.setVisibility(View.GONE);
+
+        }
+
+        return decision.get();
     }
 }

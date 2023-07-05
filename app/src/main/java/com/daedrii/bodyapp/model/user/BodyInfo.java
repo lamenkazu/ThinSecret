@@ -14,6 +14,8 @@ public class BodyInfo {
 
     private Sex gender;
 
+    private Boolean transgender;
+
     private DietGoal goal;
 
     private ActLevel actLevel;
@@ -47,7 +49,6 @@ public class BodyInfo {
     public BodyInfo() {
         this.diet = null;
         this.gender = null;
-        this.goal = null;
         this.actLevel = null;
         this.age = 0;
     }
@@ -165,6 +166,14 @@ public class BodyInfo {
 
     public void setDiet(DietType diet) {
         this.diet = diet;
+    }
+
+    public Boolean getTransgender() {
+        return transgender;
+    }
+
+    public void setTransgender(Boolean transgender) {
+        this.transgender = transgender;
     }
 
     public static List<DietGoal> getDietGoalValues() {

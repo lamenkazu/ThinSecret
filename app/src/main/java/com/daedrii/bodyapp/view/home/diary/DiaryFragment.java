@@ -24,6 +24,7 @@ import com.daedrii.bodyapp.model.fatsecret.FatSecretApiService;
 import com.daedrii.bodyapp.model.fatsecret.Serving;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -59,7 +60,6 @@ public class DiaryFragment extends Fragment {
         //Views de IDR e IR
         irView = view.findViewById(R.id.irView);
         idrView = view.findViewById(R.id.idrView);
-        clearFoodList();
 
         //SearchItems Component
         searchResultsRecyclerView = view.findViewById(R.id.recycler_search_result);
@@ -158,10 +158,12 @@ public class DiaryFragment extends Fragment {
         super.onResume();
 
         DecimalFormat decimalFormat = new DecimalFormat("#");
-        HomeController.getUserData(userInfo -> {
-            idrView.setText("IDR: " + decimalFormat.format(userInfo.getBodyInfo().getIDR()));
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            HomeController.getUserData(userInfo -> {
+                idrView.setText("IDR: " + decimalFormat.format(userInfo.getBodyInfo().getIDR()));
 
-        });
+            });
+        }
     }
 
     private void searchFoodsAsync(String query) {

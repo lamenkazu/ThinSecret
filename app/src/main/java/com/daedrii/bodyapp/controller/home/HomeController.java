@@ -226,12 +226,32 @@ public class HomeController {
                                         userBodyInfo.setWeight(((Long) Objects.requireNonNull(bodyInfoMap.get("weight"))).intValue());
                                         userBodyInfo.setHeight(((Long) Objects.requireNonNull(bodyInfoMap.get("height"))).intValue());
                                         userBodyInfo.setGender(BodyInfo.Sex.valueOf((String) bodyInfoMap.get("gender")));
-                                        userBodyInfo.setGoal(BodyInfo.DietGoal.valueOf((String) bodyInfoMap.get("goal")));
-                                        userBodyInfo.setActLevel(BodyInfo.ActLevel.valueOf((String) bodyInfoMap.get("actLevel")));
+                                        String goalValue = (String) bodyInfoMap.get("goal");
+                                        if (goalValue != null && !goalValue.isEmpty()) {
+                                            try {
+                                                userBodyInfo.setGoal(BodyInfo.DietGoal.valueOf(goalValue));
+                                            } catch (IllegalArgumentException e) {
+                                                // Tratar caso o valor obtido não corresponda a nenhum dos valores do enum
+                                            }
+                                        }
+                                        String actValue = (String) bodyInfoMap.get("actLevel");
+                                        if (actValue != null && !actValue.isEmpty()) {
+                                            try {
+                                                userBodyInfo.setActLevel(BodyInfo.ActLevel.valueOf(actValue));
+                                            } catch (IllegalArgumentException e) {
+                                                // Tratar caso o valor obtido não corresponda a nenhum dos valores do enum
+                                            }
+                                        }
                                         userBodyInfo.setIMC(Double.valueOf(Objects.requireNonNull(bodyInfoMap.get("imc")).toString()));
                                         userBodyInfo.setIDR(Double.valueOf(Objects.requireNonNull(bodyInfoMap.get("idr")).toString()));
-                                        userBodyInfo.setDiet(BodyInfo.DietType.valueOf((String) bodyInfoMap.get("diet")));
-
+                                        String dietValue = (String) bodyInfoMap.get("diet");
+                                        if (dietValue != null && !dietValue.isEmpty()) {
+                                            try {
+                                                userBodyInfo.setDiet(BodyInfo.DietType.valueOf(dietValue));
+                                            } catch (IllegalArgumentException e) {
+                                                // Tratar caso o valor obtido não corresponda a nenhum dos valores do enum
+                                            }
+                                        }
                                         userInfo.setBodyInfo(userBodyInfo);
                                     }
                                 }

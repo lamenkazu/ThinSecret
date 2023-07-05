@@ -1,4 +1,4 @@
-package com.daedrii.bodyapp;
+package com.daedrii.bodyapp.controller.sign;
 
 import static org.junit.Assert.*;
 

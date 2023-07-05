@@ -19,7 +19,7 @@
             android:name=".view.settings.UserSettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".view.sign.signup.DietType"
+            android:name=".view.sign.signup.DietTypeSignUp"
             android:exported="false" />
         <activity
             android:name=".view.sign.SignInActivity"
