@@ -1,7 +1,7 @@
 package com.daedrii.bodyapp.view.home.diary;
 
-import static com.daedrii.bodyapp.model.fatsecret.XmlParser.parseFoodDetails;
-import static com.daedrii.bodyapp.model.fatsecret.XmlParser.parseFoodSearchResults;
+import static com.daedrii.bodyapp.controller.fatsecret.XmlParser.parseFoodDetails;
+import static com.daedrii.bodyapp.controller.fatsecret.XmlParser.parseFoodSearchResults;
 
 import android.os.Bundle;
 
@@ -20,7 +20,7 @@ import com.daedrii.bodyapp.R;
 import com.daedrii.bodyapp.controller.home.FoodListAdapter;
 import com.daedrii.bodyapp.controller.home.HomeController;
 import com.daedrii.bodyapp.model.fatsecret.FoodDetails;
-import com.daedrii.bodyapp.model.fatsecret.FatSecretApiService;
+import com.daedrii.bodyapp.controller.fatsecret.FatSecretApiService;
 import com.daedrii.bodyapp.model.fatsecret.Serving;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;

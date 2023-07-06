@@ -4,7 +4,6 @@ public class UserInfo {
 
     private String name;
     private String email;
-//    private String senha;
     private String phone;
     private String birthDate;
     private BodyInfo bodyInfo;
@@ -14,7 +13,6 @@ public class UserInfo {
 
         this.name = name;
         this.bodyInfo = bodyInfo;
-//        this.senha = senha;
         this.email = email;
         this.phone = phone;
     }
@@ -47,14 +45,6 @@ public class UserInfo {
     public void setEmail(String email) {
         this.email = email;
     }
-
-//    public String getSenha() {
-//        return senha;
-//    }
-//
-//    public void setSenha(String senha) {
-//        this.senha = senha;
-//    }
 
     public String getPhone() {
         return phone;

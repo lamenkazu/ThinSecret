@@ -1,4 +1,7 @@
-package com.daedrii.bodyapp.model.fatsecret;
+package com.daedrii.bodyapp.controller.fatsecret;
+
+import com.daedrii.bodyapp.model.fatsecret.FoodDetails;
+import com.daedrii.bodyapp.model.fatsecret.Serving;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

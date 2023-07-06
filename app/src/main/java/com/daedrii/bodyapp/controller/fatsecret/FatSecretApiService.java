@@ -1,4 +1,4 @@
-package com.daedrii.bodyapp.model.fatsecret;
+package com.daedrii.bodyapp.controller.fatsecret;
 
 import java.io.IOException;
 
